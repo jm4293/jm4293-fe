@@ -3,39 +3,25 @@
 @tailwind utilities;
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #f4f4f4;
+  --white: #ffffff;
+  --black: #000000;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.login-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  /*background: var(--white);*/
+  /*font-family: Arial, Helvetica, sans-serif;*/
+  width: 100vw;
   height: 100vh;
-  background-color: #f4f4f4;
 }
 
-.login-form {
+form {
   background-color: white;
   padding: 20px;
   border-radius: 8px;
@@ -43,9 +29,13 @@ body {
   width: 300px;
 }
 
-.login-form h2 {
-  margin-bottom: 20px;
-  text-align: center;
+button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--white);
 }
 
 .input-group {
@@ -62,38 +52,6 @@ body {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
-}
-
-/*.input-group button {*/
-/*  margin-bottom: 5px;*/
-/*}*/
-
-.sign-in-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.sign-in-button:hover {
-  background-color: #45a049;
-}
-
-.sign-up-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #008CBA;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.sign-up-button:hover {
-  background-color: #007a9b;
 }
 
 .find-password-button {

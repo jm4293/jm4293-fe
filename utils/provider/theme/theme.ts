@@ -1,5 +1,12 @@
 import { alpha, createTheme } from '@mui/system';
 
+declare module '@mui/material/Button' {
+  interface ButtonPropsColorOverrides {
+    red: true;
+    primary: true;
+  }
+}
+
 const redBase = '#FF4D4F';
 const redMain = alpha(redBase, 1);
 const customPrimary = '#2196F3';
