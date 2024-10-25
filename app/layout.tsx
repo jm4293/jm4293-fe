@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ko">
-      <body style={{ border: '1px solid blue' }}>
+      <body>
         <QueryProviderConfig>{children}</QueryProviderConfig>
       </body>
     </html>

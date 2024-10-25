@@ -5,6 +5,7 @@ import useStorage from '@/hooks/useStorage';
 import useAuthMutation from '@/hooks/mutation/auth/useAuthMutation';
 import { useRouter } from 'next/navigation';
 import { IAuthSignInReq } from '@/types/interface/auth';
+import ButtonWithSpinner from '@/components/button/ButtonWithSpinner';
 
 export default function AuthForm() {
   const [signInData, setSignInData] = useState<IAuthSignInReq>({ email: '', password: '' });
@@ -31,10 +32,12 @@ export default function AuthForm() {
 
   const onSignUpHandle = () => {
     // navigate('/sign-up');
+    console.log('회원가입');
   };
 
   const onFindPasswordHandle = () => {
     // navigate('/find-password');
+    console.log('비밀번호 찾기');
   };
 
   return (
@@ -59,17 +62,17 @@ export default function AuthForm() {
           required
         />
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        <button type="submit" className="bg-blue-400 hover:bg-blue-500">
-          로그인
-        </button>
+      <div className="flex flex-col gap-2">
+        <ButtonWithSpinner type="submit" text="로그인" bgColor="blue" disabled={onSignInMutation.isLoading} />
         <div className="flex gap-2">
-          <button type="button" className="bg-gray-400 hover:bg-gray-500" onClick={onFindPasswordHandle}>
-            비밀번호 변경
-          </button>
-          <button type="button" className="bg-sky-400 hover:bg-sky-500" onClick={onSignUpHandle}>
-            회원가입
-          </button>
+          <ButtonWithSpinner
+            type="button"
+            text="비밀번호 찾기"
+            bgColor="sky"
+            onClick={onFindPasswordHandle}
+            disabled={false}
+          />
+          <ButtonWithSpinner type="button" text="회원가입" bgColor="sky" onClick={onSignUpHandle} disabled={false} />
         </div>
       </div>
     </form>

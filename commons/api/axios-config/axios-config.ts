@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 interface IRequest {
   method: string;
@@ -8,13 +8,19 @@ interface IRequest {
   headers: {};
 }
 
+interface IPostRequest {
+  url: string;
+  data: unknown;
+  headers?: {};
+}
+
 export class AxiosConfig {
   static axiosInstance = axios.create({
     baseURL: `${process.env.NEXT_PUBLIC_API_URL}:${process.env.NEXT_PUBLIC_API_PORT}`,
     headers: { 'Content-Type': 'application/json', withCredentials: true },
   });
 
-  static async request({ method, url, data, params, headers }: IRequest) {
+  private static async request({ method, url, data, params, headers }: IRequest) {
     try {
       return await this.axiosInstance.request({ method, url, data, params, headers });
     } catch (error: unknown) {
@@ -40,7 +46,8 @@ export class AxiosConfig {
             break;
         }
       }
-      // throw error;
+
+      return undefined;
     }
   }
 
@@ -48,7 +55,7 @@ export class AxiosConfig {
     return await AxiosConfig.request({ method: 'get', url, data: null, params, headers });
   }
 
-  static async post<T, D>({ url, data, headers = {} }: { url: string; data: D; headers?: {} }) {
+  static async post<T, D>({ url, data, headers = {} }: IPostRequest): Promise<AxiosResponse<T, D> | undefined> {
     // if (!!headers) {
     //   return await AxiosConfig.request({ method: 'post', url, data, params: null, headers });
     // } else {

@@ -13,7 +13,7 @@ export class AuthApi extends AxiosConfig {
     });
 
     if (!response) {
-      return null;
+      return undefined;
     }
 
     const token: string = response.headers['authorization'];
