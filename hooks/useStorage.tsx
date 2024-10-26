@@ -1,76 +1,32 @@
 export default function useStorage() {
-  const setSessionStorage = (key: string, value: string) => {
-    try {
-      sessionStorage.setItem(key, value);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const setSessionStorage = (key: string, value: string) => sessionStorage.setItem(key, value);
 
-  const getSessionStorage = (key: string) => {
-    try {
-      return sessionStorage.getItem(key);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const getSessionStorage = (key: string) => sessionStorage.getItem(key);
 
-  const removeSessionStorage = (key: string) => {
-    try {
-      sessionStorage.removeItem(key);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const removeSessionStorage = (key: string) => sessionStorage.removeItem(key);
 
-  const clearSessionStorage = () => {
-    try {
-      sessionStorage.clear();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const clearSessionStorage = () => sessionStorage.clear();
 
-  const setLocalStorage = (key: string, value: string) => {
-    try {
-      localStorage.setItem(key, value);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const setLocalStorage = (key: string, value: string) => localStorage.setItem(key, value);
 
-  const getLocalStorage = (key: string) => {
-    try {
-      return localStorage.getItem(key);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const getLocalStorage = (key: string) => localStorage.getItem(key);
 
-  const removeLocalStorage = (key: string) => {
-    try {
-      localStorage.removeItem(key);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const removeLocalStorage = (key: string) => localStorage.removeItem(key);
 
-  const clearLocalStorage = () => {
-    try {
-      localStorage.clear();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const clearLocalStorage = () => localStorage.clear();
 
   return {
-    setSessionStorage,
-    getSessionStorage,
-    removeSessionStorage,
-    clearSessionStorage,
-    setLocalStorage,
-    getLocalStorage,
-    removeLocalStorage,
-    clearLocalStorage,
+    session: {
+      set: setSessionStorage,
+      get: getSessionStorage,
+      remove: removeSessionStorage,
+      clear: clearSessionStorage,
+    },
+    local: {
+      set: setLocalStorage,
+      get: getLocalStorage,
+      remove: removeLocalStorage,
+      clear: clearLocalStorage,
+    },
   };
 }

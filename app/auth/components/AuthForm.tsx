@@ -10,7 +10,7 @@ import ButtonWithSpinner from '@/components/button/ButtonWithSpinner';
 export default function AuthForm() {
   const [signInData, setSignInData] = useState<IAuthSignInReq>({ email: '', password: '' });
 
-  const { setSessionStorage, setLocalStorage } = useStorage();
+  const { session } = useStorage();
   const { onSignInMutation } = useAuthMutation();
   const router = useRouter();
 
@@ -20,11 +20,10 @@ export default function AuthForm() {
     const response = await onSignInMutation.mutateAsync(signInData);
 
     if (!!response) {
-      const { email, name, refreshToken } = response;
+      const { email, name } = response;
 
-      setLocalStorage('refreshToken', refreshToken);
-      setSessionStorage('email', email);
-      setSessionStorage('name', name);
+      session.set('email', email);
+      session.set('name', name);
 
       router.push('/board-list');
     }
@@ -32,12 +31,10 @@ export default function AuthForm() {
 
   const onSignUpHandle = () => {
     // navigate('/sign-up');
-    console.log('회원가입');
   };
 
   const onFindPasswordHandle = () => {
     // navigate('/find-password');
-    console.log('비밀번호 찾기');
   };
 
   return (

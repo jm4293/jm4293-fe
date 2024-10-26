@@ -16,10 +16,6 @@ export class AuthApi extends AxiosConfig {
       return undefined;
     }
 
-    const token: string = response.headers['authorization'];
-
-    AxiosConfig.setAuthorizationHeader(token);
-
     return response.data.data;
   }
 

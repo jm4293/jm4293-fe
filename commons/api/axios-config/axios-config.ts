@@ -17,7 +17,8 @@ interface IPostRequest {
 export class AxiosConfig {
   static axiosInstance = axios.create({
     baseURL: `${process.env.NEXT_PUBLIC_API_URL}:${process.env.NEXT_PUBLIC_API_PORT}`,
-    headers: { 'Content-Type': 'application/json', withCredentials: true },
+    headers: { 'Content-Type': 'application/json' },
+    withCredentials: true,
   });
 
   private static async request({ method, url, data, params, headers }: IRequest) {
