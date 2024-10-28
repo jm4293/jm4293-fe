@@ -19,16 +19,17 @@ export class AuthApi extends AxiosConfig {
     return response.data.data;
   }
 
-  static async signUp(data: IAuthSignUp) {
-    try {
-      // return await AxiosConfig.post(`${this._baseUrl}/sign-up`, data);
-      return await AxiosConfig.post({
-        url: `${this._baseUrl}/sign-up`,
-        data,
-      });
-    } catch (error) {
-      throw error;
+  static async signUp<T, D>(data: D) {
+    const response: AxiosResponse<ResponseConfig<T>, D> | undefined = await AxiosConfig.post({
+      url: `${this._baseUrl}/sign-up`,
+      data,
+    });
+
+    if (!response) {
+      return undefined;
     }
+
+    return response.data.data;
   }
 
   static async findPassword(data: IAuthFindPassword) {

@@ -1,16 +1,20 @@
 'use client';
 
 import { useMutation } from 'react-query';
-import { IAuthSignInReq } from '@/types/interface/auth';
+import { IAuthSignInReq, IAuthSignInRes, IAuthSignUp, IAuthSigUpRes } from '@/types/interface/auth';
 import { AuthApi } from '@/commons/api/auth/auth.api';
-import { IAuthSignInRes } from '@/types/interface/auth/auth.response.interface';
 
 export default function useAuthMutation() {
   const onSignInMutation = useMutation({
     mutationFn: (data: IAuthSignInReq) => AuthApi.signIn<IAuthSignInRes, IAuthSignInReq>(data),
   });
 
+  const onSignUpMutation = useMutation({
+    mutationFn: (data: IAuthSignUp) => AuthApi.signUp<IAuthSigUpRes, IAuthSignUp>(data),
+  });
+
   return {
     onSignInMutation,
+    onSignUpMutation,
   };
 }

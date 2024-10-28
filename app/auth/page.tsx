@@ -1,9 +1,15 @@
 import AuthForm from '@/app/auth/components/AuthForm';
 
-export default function AuthPage() {
+interface IProps {
+  searchParams: {
+    email: string;
+  };
+}
+
+export default function AuthPage({ searchParams }: IProps) {
   return (
     <div className="w-full h-full flex justify-center items-center">
-      <AuthForm />
+      <AuthForm {...{ email: searchParams.email }} />
     </div>
   );
 }

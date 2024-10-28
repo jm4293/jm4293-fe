@@ -1,16 +1,21 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import useStorage from '@/hooks/useStorage';
 import useAuthMutation from '@/hooks/mutation/auth/useAuthMutation';
-import { useRouter } from 'next/navigation';
 import { IAuthSignInReq } from '@/types/interface/auth';
 import ButtonWithSpinner from '@/components/button/ButtonWithSpinner';
+import { useRouter } from 'next/navigation';
 
-export default function AuthForm() {
+interface IProps {
+  email?: string;
+}
+
+export default function AuthForm({ email = undefined }: IProps) {
   const { session } = useStorage();
   const { onSignInMutation } = useAuthMutation();
   const router = useRouter();
+  const passwordRef = useRef<HTMLInputElement>(null);
 
   const [signInData, setSignInData] = useState<IAuthSignInReq>({ email: '', password: '' });
 
@@ -30,12 +35,21 @@ export default function AuthForm() {
   };
 
   const onSignUpHandle = () => {
-    // navigate('/sign-up');
+    router.push('/auth/sign-up');
   };
 
   const onFindPasswordHandle = () => {
     // navigate('/find-password');
   };
+
+  console.log('email', email);
+
+  useEffect(() => {
+    if (!!email) {
+      setSignInData((prev) => ({ ...prev, email }));
+      passwordRef.current?.focus();
+    }
+  }, [email]);
 
   return (
     <form onSubmit={onSubmitHandle}>
@@ -52,6 +66,7 @@ export default function AuthForm() {
       <div className="input-group">
         <label htmlFor="password">비밀번호</label>
         <input
+          ref={passwordRef}
           id="password"
           type="password"
           value={signInData.password}
@@ -69,7 +84,7 @@ export default function AuthForm() {
             onClick={onFindPasswordHandle}
             disabled={false}
           />
-          <ButtonWithSpinner type="button" text="회원가입" bgColor="sky" onClick={onSignUpHandle} disabled={false} />
+          <ButtonWithSpinner type="button" text="회원가입" bgColor="sky" onClick={onSignUpHandle} />
         </div>
       </div>
     </form>
