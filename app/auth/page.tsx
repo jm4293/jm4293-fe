@@ -2,7 +2,7 @@ import AuthForm from '@/app/auth/components/AuthForm';
 
 interface IProps {
   searchParams: {
-    email: string;
+    email?: string;
   };
 }
 

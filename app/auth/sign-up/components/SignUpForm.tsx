@@ -59,7 +59,7 @@ export default function SignUpForm() {
           required
         />
       </div>
-      <ButtonWithSpinner type="submit" text="회원가입" bgColor="sky" />
+      <ButtonWithSpinner type="submit" text="회원가입" bgColor="sky" disabled={onSignUpMutation.isLoading} />
     </form>
   );
 }
