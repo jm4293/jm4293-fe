@@ -8,11 +8,11 @@ import { IAuthSignInReq } from '@/types/interface/auth';
 import ButtonWithSpinner from '@/components/button/ButtonWithSpinner';
 
 export default function AuthForm() {
-  const [signInData, setSignInData] = useState<IAuthSignInReq>({ email: '', password: '' });
-
   const { session } = useStorage();
   const { onSignInMutation } = useAuthMutation();
   const router = useRouter();
+
+  const [signInData, setSignInData] = useState<IAuthSignInReq>({ email: '', password: '' });
 
   const onSubmitHandle = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

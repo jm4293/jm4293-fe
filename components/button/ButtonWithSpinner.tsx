@@ -6,7 +6,7 @@ import { ClipLoader } from 'react-spinners';
 interface IButtonWithSpinnerProps {
   onClick?: MouseEventHandler<HTMLButtonElement>;
   text: string;
-  disabled: boolean;
+  disabled?: boolean;
   bgColor: 'blue' | 'green' | 'red' | 'gray' | 'sky';
   type: 'button' | 'submit' | 'reset';
 }
@@ -22,14 +22,14 @@ const classNames = {
 export default function ButtonWithSpinner({
   onClick,
   text,
-  disabled,
+  disabled = false,
   bgColor,
   type = 'button',
 }: IButtonWithSpinnerProps) {
   const buttonClass = classNames[bgColor];
 
   return (
-    <button className={`${buttonClass}`} type={type} onClick={onClick} disabled={disabled}>
+    <button className={`whitespace-normal ${buttonClass}`} type={type} onClick={onClick} disabled={disabled}>
       {disabled ? <ClipLoader size={15} color="#FFFFFF" /> : text}
     </button>
   );
