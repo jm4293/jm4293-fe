@@ -11,7 +11,7 @@ interface IProps {
   email?: string;
 }
 
-export default function AuthForm({ email = undefined }: IProps) {
+export default function SignInForm({ email = undefined }: IProps) {
   const { session } = useStorage();
   const { onSignInMutation } = useAuthMutation();
   const router = useRouter();
@@ -30,7 +30,7 @@ export default function AuthForm({ email = undefined }: IProps) {
       session.set('email', email);
       session.set('name', name);
 
-      router.push('/board-list');
+      router.push('/board');
     }
   };
 

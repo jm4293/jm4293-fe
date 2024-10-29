@@ -1,4 +1,4 @@
-import AuthForm from '@/app/auth/components/AuthForm';
+import SignInForm from '@/app/auth/components/SignInForm';
 
 interface IProps {
   searchParams: {
@@ -9,7 +9,7 @@ interface IProps {
 export default function AuthPage({ searchParams }: IProps) {
   return (
     <div className="w-full h-full flex justify-center items-center">
-      <AuthForm {...{ email: searchParams.email }} />
+      <SignInForm {...{ email: searchParams.email }} />
     </div>
   );
 }

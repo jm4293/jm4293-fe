@@ -22,7 +22,7 @@ export default function FindEmailForm() {
 
     if (!!response) {
       alert(`아이디는 ${response.email} 입니다.`);
-      router.push(`/auth?email=${response.email}`);
+      router.replace(`/auth?email=${response.email}`);
     }
   };
 

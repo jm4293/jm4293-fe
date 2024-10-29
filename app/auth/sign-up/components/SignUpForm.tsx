@@ -25,7 +25,7 @@ export default function SignUpForm() {
       const { email } = response;
 
       alert('회원가입이 완료되었습니다.');
-      router.push(`/auth?email=${email}`);
+      router.replace(`/auth?email=${email}`);
     }
   };
 

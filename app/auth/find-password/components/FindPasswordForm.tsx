@@ -45,7 +45,7 @@ export default function FindPasswordForm() {
 
     if (response) {
       alert('비밀번호 변경이 완료되었습니다.');
-      router.push(`/auth?email=${data.email}`);
+      router.replace(`/auth?email=${data.email}`);
     }
   };
 
