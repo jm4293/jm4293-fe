@@ -26,7 +26,7 @@ export default function Pagination({ totalCount, currentPage }: IProps) {
         setPageRange(newPageRange);
       }
 
-      router.push(`/board-list?page=${page}`);
+      router.push(`/board?page=${page}`);
     }
   };
 

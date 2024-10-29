@@ -54,7 +54,8 @@ export class AxiosConfig {
         }
       }
 
-      return undefined;
+      // return undefined;
+      throw error;
     }
   }
 

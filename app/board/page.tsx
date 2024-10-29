@@ -1,8 +1,9 @@
 import { cookies } from 'next/headers';
-import dayjs from 'dayjs';
-import BoardListHeader from '@/app/board-list/components/board-list-header';
+import BoardListHeader from '@/app/board/components/board-list-header';
 import Pagination from '@/components/pagination/Pagination';
 import { BOARD_ITEM_COUNT } from '@/commons/constant';
+import { IBoardListRes } from '@/types/interface/board/board.response.interface';
+import BoardList from '@/app/board/components/board-list-row';
 
 interface IProps {
   searchParams: {
@@ -36,19 +37,7 @@ export default async function BoardListPage({ searchParams }: IProps) {
 
       <ul>
         {!!data.list ? (
-          data.list.map((board: any) => (
-            <li key={board.id}>
-              <div className="flex justify-between">
-                <p>
-                  {board.id}. {board.title}
-                </p>
-                <div className="flex gap-2">
-                  <p>{board.writer}</p>
-                  <p>{dayjs(board.createdAt).format('YYYY-MM-DD')}</p>
-                </div>
-              </div>
-            </li>
-          ))
+          data.list.map((board: IBoardListRes) => <BoardList key={board.seq} board={board} />)
         ) : (
           <li>게시글이 없습니다.</li>
         )}

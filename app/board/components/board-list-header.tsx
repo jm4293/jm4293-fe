@@ -1,9 +1,14 @@
 'use client';
 
 import ButtonWithSpinner from '@/components/button/ButtonWithSpinner';
+import { useRouter } from 'next/navigation';
 
 export default function BoardListHeader() {
-  const onCreateBoardHandle = () => {};
+  const router = useRouter();
+
+  const onCreateBoardHandle = () => {
+    router.push('/board/create');
+  };
 
   const onLogoutHandle = () => {};
 
