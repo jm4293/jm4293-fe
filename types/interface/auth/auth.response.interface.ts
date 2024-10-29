@@ -9,3 +9,8 @@ export interface IAuthSigUpRes {
   name: string;
   refreshToken: string;
 }
+
+export interface IAuthFindEmailRes {
+  name: string;
+  email: string;
+}

@@ -4,15 +4,16 @@ import { FormEvent, useState } from 'react';
 import ButtonWithSpinner from '@/components/button/ButtonWithSpinner';
 import useAuthMutation from '@/hooks/mutation/auth/useAuthMutation';
 import { useRouter } from 'next/navigation';
+import { IAuthSignUpReq } from '@/types/interface/auth';
 
 export default function SignUpForm() {
   const { onSignUpMutation } = useAuthMutation();
   const router = useRouter();
 
-  const [data, setData] = useState({
+  const [data, setData] = useState<IAuthSignUpReq>({
+    name: '',
     email: '',
     password: '',
-    name: '',
   });
 
   const onSignUpHandler = async (e: FormEvent<HTMLFormElement>) => {
@@ -29,8 +30,17 @@ export default function SignUpForm() {
   };
 
   return (
-    <form onSubmit={onSignUpHandler} className="login-form">
+    <form onSubmit={onSignUpHandler}>
       <h2 className="text-center mb-2">회원가입</h2>
+      <div className="input-group">
+        <label htmlFor="name">이름</label>
+        <input
+          id="name"
+          value={data.name}
+          onChange={(e) => setData((prev) => ({ ...prev, name: e.target.value }))}
+          required
+        />
+      </div>
       <div className="input-group">
         <label htmlFor="email">아이디</label>
         <input
@@ -50,16 +60,7 @@ export default function SignUpForm() {
           required
         />
       </div>
-      <div className="input-group">
-        <label htmlFor="name">이름</label>
-        <input
-          id="name"
-          value={data.name}
-          onChange={(e) => setData((prev) => ({ ...prev, name: e.target.value }))}
-          required
-        />
-      </div>
-      <ButtonWithSpinner type="submit" text="회원가입" bgColor="sky" disabled={onSignUpMutation.isLoading} />
+      <ButtonWithSpinner type="submit" text="회원가입" bgColor="blue" disabled={onSignUpMutation.isLoading} />
     </form>
   );
 }

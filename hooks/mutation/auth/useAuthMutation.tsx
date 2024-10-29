@@ -1,7 +1,16 @@
 'use client';
 
 import { useMutation } from 'react-query';
-import { IAuthSignInReq, IAuthSignInRes, IAuthSignUp, IAuthSigUpRes } from '@/types/interface/auth';
+import {
+  IAuthChangePasswordReq,
+  IAuthFindEmailReq,
+  IAuthFindEmailRes,
+  IAuthSignInReq,
+  IAuthSignInRes,
+  IAuthSignUpReq,
+  IAuthSigUpRes,
+  IAuthVerifyEmailReq,
+} from '@/types/interface/auth';
 import { AuthApi } from '@/commons/api/auth/auth.api';
 
 export default function useAuthMutation() {
@@ -10,11 +19,26 @@ export default function useAuthMutation() {
   });
 
   const onSignUpMutation = useMutation({
-    mutationFn: (data: IAuthSignUp) => AuthApi.signUp<IAuthSigUpRes, IAuthSignUp>(data),
+    mutationFn: (data: IAuthSignUpReq) => AuthApi.signUp<IAuthSigUpRes, IAuthSignUpReq>(data),
+  });
+
+  const onVerifyEmailMutation = useMutation({
+    mutationFn: (data: IAuthVerifyEmailReq) => AuthApi.verifyEmail<boolean, IAuthVerifyEmailReq>(data),
+  });
+
+  const onChangePasswordMutation = useMutation({
+    mutationFn: (data: IAuthChangePasswordReq) => AuthApi.changePassword<boolean, IAuthChangePasswordReq>(data),
+  });
+
+  const onFindEmailMutation = useMutation({
+    mutationFn: (data: IAuthFindEmailReq) => AuthApi.findEmail<IAuthFindEmailRes, IAuthFindEmailReq>(data),
   });
 
   return {
     onSignInMutation,
     onSignUpMutation,
+    onVerifyEmailMutation,
+    onChangePasswordMutation,
+    onFindEmailMutation,
   };
 }

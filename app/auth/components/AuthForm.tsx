@@ -38,11 +38,13 @@ export default function AuthForm({ email = undefined }: IProps) {
     router.push('/auth/sign-up');
   };
 
-  const onFindPasswordHandle = () => {
-    // navigate('/find-password');
+  const onFindEmailHandle = () => {
+    router.push('/auth/find-email');
   };
 
-  console.log('email', email);
+  const onFindPasswordHandle = () => {
+    router.push('/auth/find-password');
+  };
 
   useEffect(() => {
     if (!!email) {
@@ -76,15 +78,10 @@ export default function AuthForm({ email = undefined }: IProps) {
       </div>
       <div className="flex flex-col gap-2">
         <ButtonWithSpinner type="submit" text="로그인" bgColor="blue" disabled={onSignInMutation.isLoading} />
+        <ButtonWithSpinner type="button" text="회원가입" bgColor="blue" onClick={onSignUpHandle} />
         <div className="flex gap-2">
-          <ButtonWithSpinner
-            type="button"
-            text="비밀번호 찾기"
-            bgColor="sky"
-            onClick={onFindPasswordHandle}
-            disabled={false}
-          />
-          <ButtonWithSpinner type="button" text="회원가입" bgColor="sky" onClick={onSignUpHandle} />
+          <ButtonWithSpinner type="button" text="아이디 찾기" bgColor="gray" onClick={onFindEmailHandle} />
+          <ButtonWithSpinner type="button" text="비밀번호 찾기" bgColor="gray" onClick={onFindPasswordHandle} />
         </div>
       </div>
     </form>

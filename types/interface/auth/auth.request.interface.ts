@@ -3,22 +3,22 @@ export interface IAuthSignInReq {
   password: string;
 }
 
-export interface IAuthSignUp {
+export interface IAuthSignUpReq {
   email: string;
   password: string;
   name: string;
 }
 
-export interface IAuthChangePassword {
+export interface IAuthVerifyEmailReq {
+  email: string;
+  name: string;
+}
+
+export interface IAuthChangePasswordReq {
   email: string;
   password: string;
 }
 
-export interface IAuthFindPassword {
-  email: string;
-}
-
-export interface IAuthResponse {
-  email: string;
+export interface IAuthFindEmailReq {
   name: string;
 }

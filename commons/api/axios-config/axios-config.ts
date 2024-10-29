@@ -14,6 +14,12 @@ interface IPostRequest {
   headers?: {};
 }
 
+interface IPatchRequest {
+  url: string;
+  data: unknown;
+  headers?: {};
+}
+
 export class AxiosConfig {
   static axiosInstance = axios.create({
     baseURL: `${process.env.NEXT_PUBLIC_API_URL}:${process.env.NEXT_PUBLIC_API_PORT}`,
@@ -74,7 +80,7 @@ export class AxiosConfig {
     return await AxiosConfig.request({ method: 'delete', url, data: null, params, headers });
   }
 
-  static async patch(url: string, data: unknown, headers = {}) {
+  static async patch<T, D>({ url, data, headers = {} }: IPatchRequest): Promise<AxiosResponse<T, D> | undefined> {
     return await AxiosConfig.request({ method: 'patch', url, data, params: null, headers });
   }
 

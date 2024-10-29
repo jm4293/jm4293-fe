@@ -1,5 +1,4 @@
 import { AxiosConfig } from '@/commons/api';
-import { IAuthFindPassword, IAuthSignUp } from '@/types/interface/auth';
 import { AxiosResponse } from 'axios';
 import { ResponseConfig } from '@/types/interface/dto/response.config';
 
@@ -25,18 +24,37 @@ export class AuthApi extends AxiosConfig {
       data,
     });
 
-    if (!response) {
-      return undefined;
+    if (!!response) {
+      return response.data.data;
     }
-
-    return response.data.data;
   }
 
-  static async findPassword(data: IAuthFindPassword) {
-    try {
-      return await AxiosConfig.patch(`${this._baseUrl}/change-password`, data);
-    } catch (error) {
-      throw error;
+  static async verifyEmail<T, D>(data: D) {
+    const response: AxiosResponse<ResponseConfig<T>, D> | undefined = await AxiosConfig.post({
+      url: `${this._baseUrl}/verify-id`,
+      data,
+    });
+
+    return !!response;
+  }
+
+  static async findEmail<T, D>(data: D) {
+    const response: AxiosResponse<ResponseConfig<T>, D> | undefined = await AxiosConfig.post({
+      url: `${this._baseUrl}/find-email`,
+      data,
+    });
+
+    if (!!response) {
+      return response.data.data;
     }
+  }
+
+  static async changePassword<T, D>(data: D) {
+    const response: AxiosResponse<ResponseConfig<T>, D> | undefined = await AxiosConfig.patch({
+      url: `${this._baseUrl}/change-password`,
+      data,
+    });
+
+    return !!response;
   }
 }
