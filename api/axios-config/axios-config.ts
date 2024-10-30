@@ -3,14 +3,32 @@ import axios, { AxiosResponse } from 'axios';
 interface IRequest {
   method: string;
   url: string;
-  data: unknown | null;
-  params: number | null;
+  data?: unknown;
+  params?: number;
   headers: {};
+}
+
+interface IGetRequest {
+  url: string;
+  params: number;
+  headers?: {};
 }
 
 interface IPostRequest {
   url: string;
   data: unknown;
+  headers?: {};
+}
+
+interface IPutRequest {
+  url: string;
+  data: unknown;
+  headers?: {};
+}
+
+interface IDeleteRequest {
+  url: string;
+  params: number;
   headers?: {};
 }
 
@@ -54,38 +72,36 @@ export class AxiosConfig {
         }
       }
 
-      // return undefined;
       throw error;
     }
   }
 
-  static async get(url: string, params: number, headers = {}) {
-    return await AxiosConfig.request({ method: 'get', url, data: null, params, headers });
+  static async get<T>({ url, params, headers = {} }: IGetRequest): Promise<AxiosResponse<T, number> | undefined> {
+    return await AxiosConfig.request({ method: 'get', url: `${url}/${params}`, headers });
   }
 
   static async post<T, D>({ url, data, headers = {} }: IPostRequest): Promise<AxiosResponse<T, D> | undefined> {
-    // if (!!headers) {
-    //   return await AxiosConfig.request({ method: 'post', url, data, params: null, headers });
-    // } else {
-    //   return await AxiosConfig.request({ method: 'post', url, data, params: null, headers });
-    // }
-
-    return await AxiosConfig.request({ method: 'post', url, data, params: null, headers });
+    return await AxiosConfig.request({ method: 'post', url, data, headers });
   }
 
-  static async put(url: string, data: unknown, headers = {}) {
-    return await AxiosConfig.request({ method: 'put', url, data, params: null, headers });
+  static async put({ url, data, headers = {} }: IPutRequest) {
+    return await AxiosConfig.request({ method: 'put', url, data, headers });
   }
 
-  static async delete(url: string, params: number, headers = {}) {
-    return await AxiosConfig.request({ method: 'delete', url, data: null, params, headers });
+  static async delete<T>({ url, params, headers = {} }: IDeleteRequest): Promise<AxiosResponse<T, number> | undefined> {
+    return await AxiosConfig.request({ method: 'delete', url: `${url}/${params}`, headers });
   }
 
   static async patch<T, D>({ url, data, headers = {} }: IPatchRequest): Promise<AxiosResponse<T, D> | undefined> {
-    return await AxiosConfig.request({ method: 'patch', url, data, params: null, headers });
+    return await AxiosConfig.request({ method: 'patch', url, data, headers });
   }
 
   static setAuthorizationHeader(token: string) {
     this.axiosInstance.defaults.headers.common['Authorization'] = `${token}`;
+  }
+
+  static setEmailHeader(email: string) {
+    // this.axiosInstance.defaults.headers.common['EMAIL'] = `${email}`;
+    document.cookie = `EMAIL=${email}; path=/;`;
   }
 }
