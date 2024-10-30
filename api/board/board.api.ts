@@ -1,4 +1,4 @@
-import { AxiosConfig } from '@/api';
+import { AxiosConfig } from '@/api/axios-config';
 
 export class BoardApi extends AxiosConfig {
   static _baseUrl = `${process.env.NEXT_PUBLIC_GLOBAL_PREFIX}/board`;

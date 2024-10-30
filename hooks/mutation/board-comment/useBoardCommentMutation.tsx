@@ -19,7 +19,6 @@ export default function useBoardCommentMutation() {
     mutationFn: ({ board_seq, comment_seq }: { board_seq: number; comment_seq: number }) =>
       BoardCommentApi.boardCommentDelete<ResponseConfig<boolean>>(comment_seq),
     onSuccess: async (_, variables) => {
-      console.log('variables', variables);
       await queryClient.invalidateQueries(['boardCommentList', variables.board_seq]);
     },
   });

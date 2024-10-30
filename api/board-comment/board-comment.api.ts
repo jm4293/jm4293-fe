@@ -1,5 +1,4 @@
-import { AxiosConfig } from '@/api';
-import { ResponseConfig } from '@/types/interface/dto';
+import { AxiosConfig } from '@/api/axios-config';
 
 export class BoardCommentApi extends AxiosConfig {
   static _baseUrl = `${process.env.NEXT_PUBLIC_GLOBAL_PREFIX}/board-comment`;

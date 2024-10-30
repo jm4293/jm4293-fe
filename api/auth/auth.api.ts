@@ -1,6 +1,4 @@
-import { AxiosConfig } from '@/api';
 import { AxiosResponse } from 'axios';
-import { ResponseConfig } from '@/types/interface/dto/response.config';
 import {
   IAuthChangePasswordReq,
   IAuthFindEmailReq,
@@ -11,6 +9,8 @@ import {
   IAuthSigUpRes,
   IAuthVerifyEmailReq,
 } from '@/types/interface/auth';
+import { ResponseConfig } from '@/types/interface';
+import { AxiosConfig } from '@/api/axios-config';
 
 export class AuthApi extends AxiosConfig {
   static _baseUrl = `${process.env.NEXT_PUBLIC_GLOBAL_PREFIX}/auth`;
