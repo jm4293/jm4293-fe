@@ -1,7 +1,6 @@
 'use client';
 
 import { useMutation } from 'react-query';
-import { AuthApi } from '@/api';
 import {
   IAuthChangePasswordReq,
   IAuthFindEmailReq,
@@ -9,6 +8,7 @@ import {
   IAuthSignUpReq,
   IAuthVerifyEmailReq,
 } from '@/types/interface';
+import { AuthApi } from '@/api/auth';
 
 export default function useAuthMutation() {
   const onSignInMutation = useMutation({

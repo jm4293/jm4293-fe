@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
-import { BoardCommentApi } from '@/api';
 import { IBoardCommentsRes, ResponseConfig } from '@/types/interface';
+import { BoardCommentApi } from '@/api/board-comment';
 
 interface IProps {
   board_seq: number;
