@@ -1,7 +1,7 @@
 import { useMutation } from 'react-query';
-import { IBoardCreateReq, IBoardCreateRes } from '@/types/interface/board';
-import { BoardApi } from '@/commons/api/board/board.api';
 import { useRouter } from 'next/navigation';
+import { IBoardCreateReq, IBoardCreateRes, ResponseConfig } from '@/types/interface';
+import { BoardApi } from '@/api';
 
 export default function useBoardMutation() {
   const router = useRouter();
@@ -14,7 +14,17 @@ export default function useBoardMutation() {
     onError: (error) => {},
   });
 
+  const onBoardDeleteMutation = useMutation({
+    mutationFn: (seq: number) => BoardApi.boardDelete<ResponseConfig<boolean>>(seq),
+    onSuccess: (res) => {
+      router.back();
+      alert('삭제되었습니다.');
+    },
+    onError: (error) => {},
+  });
+
   return {
     onBoardCreateMutation,
+    onBoardDeleteMutation,
   };
 }
