@@ -37,6 +37,7 @@ button {
   border-radius: 4px;
   cursor: pointer;
   color: var(--white);
+  white-space: nowrap;
 }
 
 input,

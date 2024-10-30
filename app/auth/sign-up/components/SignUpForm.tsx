@@ -19,6 +19,18 @@ export default function SignUpForm() {
   const onSignUpHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (!data.name || data.name.trim().length === 0) {
+      return alert('이름을 입력해주세요.');
+    }
+
+    if (!data.email || data.email.trim().length === 0) {
+      return alert('아이디를 입력해주세요.');
+    }
+
+    if (!data.password || data.password.trim().length === 0) {
+      return alert('비밀번호를 입력해주세요.');
+    }
+
     const response = await onSignUpMutation.mutateAsync(data);
 
     if (!!response) {

@@ -22,11 +22,7 @@ export default function BoardComment({ board_seq }: IProps) {
   const [content, setContent] = useState('');
 
   const onSubmitHandle = () => {
-    if (!content) {
-      return alert('댓글 내용을 입력해주세요.');
-    }
-
-    if (content.trim().length === 0) {
+    if (!content || content.trim().length === 0) {
       return alert('댓글 내용을 입력해주세요.');
     }
 

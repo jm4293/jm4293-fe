@@ -17,11 +17,11 @@ export default function BoardCreatePage() {
   const onSubmitHandle = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!data.title) {
+    if (!data.title || data.title.trim().length === 0) {
       return alert('제목을 입력해주세요.');
     }
 
-    if (!data.content) {
+    if (!data.content || data.content.trim().length === 0) {
       return alert('내용을 입력해주세요.');
     }
 
