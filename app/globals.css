@@ -58,6 +58,9 @@ textarea {
 
 .input-group {
   margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .input-group label {

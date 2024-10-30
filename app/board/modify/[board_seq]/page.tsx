@@ -1,13 +1,21 @@
 'use client';
 
 import { FormEvent, useState } from 'react';
+import { IBoardCreateReq } from '@/types/interface/board';
 import ButtonWithSpinner from '@/components/button/ButtonWithSpinner';
 import useBoardMutation from '@/hooks/mutation/board/useBoardMutation';
-import { IBoardCreateReq } from '@/types/interface';
 import ButtonRouterBack from '@/app/board/components/ButtonRouterBack';
 
-export default function BoardCreatePage() {
-  const { onBoardCreateMutation } = useBoardMutation();
+interface IProps {
+  params: {
+    board_seq: string;
+  };
+}
+
+export default function BoardModifyPage({ params }: IProps) {
+  const { board_seq } = params;
+
+  const {} = useBoardMutation();
 
   const [data, setData] = useState<IBoardCreateReq>({
     title: '',
@@ -24,8 +32,6 @@ export default function BoardCreatePage() {
     if (!data.content) {
       return alert('내용을 입력해주세요.');
     }
-
-    onBoardCreateMutation.mutate(data);
   };
 
   return (
@@ -56,7 +62,7 @@ export default function BoardCreatePage() {
 
         <div className="flex gap-4">
           <ButtonRouterBack />
-          <ButtonWithSpinner type="submit" text="등록" bgColor="blue" disabled={onBoardCreateMutation.isLoading} />
+          <ButtonWithSpinner type="submit" text="수정" bgColor="blue" />
         </div>
       </form>
     </div>

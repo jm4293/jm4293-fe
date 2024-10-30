@@ -13,6 +13,7 @@ interface IProps {
 
 export default async function BoardListPage({ searchParams }: IProps) {
   const token = cookies().get('accessToken');
+
   const currentPage = searchParams.page ? parseInt(searchParams.page, 10) : 1;
 
   const res = await fetch(

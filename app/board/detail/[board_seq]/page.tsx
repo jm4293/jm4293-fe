@@ -1,8 +1,8 @@
 import { cookies } from 'next/headers';
-import ButtonToList from '@/app/board/components/button/ButtonToList';
-import ButtonModify from '@/app/board/detail/components/button/ButtonModify';
-import dayjs from 'dayjs';
-import BoardCommentForm from '@/app/board/components/comment/components/BoardCommentForm';
+import ButtonRouterBack from '@/app/board/components/ButtonRouterBack';
+import ButtonDetailModify from '@/app/board/detail/[board_seq]/components/ButtonDetailModify';
+import BoardComment from '@/app/board/detail/[board_seq]/comment/board-comment';
+import ButtonDetailDelete from '@/app/board/detail/[board_seq]/components/ButtonDetailDelete';
 
 interface IProps {
   params: {
@@ -11,10 +11,10 @@ interface IProps {
 }
 
 export default async function BoardDetailPage({ params }: IProps) {
+  const email = cookies().get('EMAIL');
   const token = cookies().get('accessToken');
-  const { board_seq } = params;
 
-  console.log('seqseqseqseqseqseq', board_seq);
+  const { board_seq } = params;
 
   const boardRes = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}:${process.env.NEXT_PUBLIC_API_PORT}/${process.env.NEXT_PUBLIC_GLOBAL_PREFIX}/board/board-detail/${board_seq}`,
@@ -29,22 +29,6 @@ export default async function BoardDetailPage({ params }: IProps) {
 
   const { data: board } = await boardRes.json();
 
-  console.log('board', board);
-
-  const boardCommentRes = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}:${process.env.NEXT_PUBLIC_API_PORT}/${process.env.NEXT_PUBLIC_GLOBAL_PREFIX}/board-comment/board-comment-list/${board_seq}`,
-    {
-      method: 'GET',
-      credentials: 'include',
-      headers: {
-        Cookie: `accessToken=${token?.value}`,
-      },
-    },
-  );
-  const { data: boardComment } = await boardCommentRes.json();
-
-  console.log('boardComment', boardComment);
-
   return (
     <>
       <div className="container">
@@ -53,44 +37,30 @@ export default async function BoardDetailPage({ params }: IProps) {
         </div>
 
         <div className="input-group">
-          <label htmlFor="title">제목</label>
+          <p>작성자</p>
+          <p>{board.name}</p>
+        </div>
+        <div className="input-group">
+          <p>제목</p>
           <p>{board.title}</p>
         </div>
         <div className="input-group">
-          <label htmlFor="content">내용</label>
+          <p>내용</p>
           <p>{board.content}</p>
         </div>
 
         <div className="flex gap-4">
-          <ButtonToList />
-          <ButtonModify email={board.email} />
+          <ButtonRouterBack />
+          {email?.value === board.email && <ButtonDetailModify board_seq={board_seq} />}
+          {email?.value === board.email && <ButtonDetailDelete board_seq={board_seq} />}
         </div>
       </div>
 
       <div className="container">
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex flex-col">
           <h1 className="mx-auto">댓글</h1>
-        </div>
 
-        <div className="flex flex-col gap-4">
-          {boardComment.length > 0 ? (
-            boardComment.map((comment: any) => (
-              <div key={comment.seq} className="input-group">
-                <label htmlFor="content">내용</label>
-                <div className="flex justify-between">
-                  <p>{comment.content}</p>
-                  <div className="flex gap-4">
-                    <p>{comment.name}</p>
-                    <p>{dayjs(comment.createdAt).format('YYYY-MM-DD hh:mm')}</p>
-                  </div>
-                </div>
-              </div>
-            ))
-          ) : (
-            <div>댓글이 없습니다.</div>
-          )}
-
-          <BoardCommentForm board_seq={board_seq} />
+          <BoardComment board_seq={board_seq} />
         </div>
       </div>
     </>
