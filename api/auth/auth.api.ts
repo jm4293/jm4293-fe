@@ -21,7 +21,7 @@ export class AuthApi extends AxiosConfig {
         await AxiosConfig.post({ url: `${this._baseUrl}/sign-in`, data });
 
       if (!!response) {
-        AxiosConfig.setEmailHeader(response.data.data.email);
+        AxiosConfig.setEmailCookie(response.data.data.email);
         return response.data.data;
       }
     } catch (error) {

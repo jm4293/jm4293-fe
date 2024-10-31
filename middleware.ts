@@ -22,33 +22,39 @@ import { cookies } from 'next/headers';
 // }
 
 export async function middleware(req: NextRequest) {
-  if (req.nextUrl.pathname === '/') {
-    return NextResponse.redirect(new URL('/auth', req.url));
+  try {
+    if (req.nextUrl.pathname === '/') {
+      return NextResponse.redirect(new URL('/auth', req.url));
+    }
+
+    const cookieStore = cookies();
+
+    const accessToken = cookieStore.get('accessToken');
+    const refreshToken = cookieStore.get('refreshToken');
+    const email = cookieStore.get('EMAIL');
+
+    if (!accessToken) {
+      return NextResponse.redirect(new URL('/auth', req.url));
+    }
+
+    // if (!accessToken && refreshToken) {
+    //   try {
+    //     accessToken = await getNewAccessToken(refreshToken.value);
+    //     cookieStore.set('accessToken', String(accessToken));
+    //   } catch (error) {
+    //     return NextResponse.redirect(new URL('/auth', req.url));
+    //   }
+    // }
+
+    // response.headers.set('Authorization', `Bearer ${accessToken.value}`);
+
+    return NextResponse.next();
+  } catch (error) {
+    console.error('middleware error', error);
+    return NextResponse.error();
   }
-
-  const cookieStore = cookies();
-
-  const accessToken = cookieStore.get('accessToken');
-  const refreshToken = cookieStore.get('refreshToken');
-
-  if (!accessToken) {
-    return NextResponse.redirect(new URL('/auth', req.url));
-  }
-
-  // if (!accessToken && refreshToken) {
-  //   try {
-  //     accessToken = await getNewAccessToken(refreshToken.value);
-  //     cookieStore.set('accessToken', String(accessToken));
-  //   } catch (error) {
-  //     return NextResponse.redirect(new URL('/auth', req.url));
-  //   }
-  // }
-
-  // response.headers.set('Authorization', `Bearer ${accessToken.value}`);
-
-  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/', '/board-list'],
+  matcher: ['/', '/board/:path*'],
 };

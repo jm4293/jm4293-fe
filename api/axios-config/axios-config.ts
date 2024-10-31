@@ -100,8 +100,8 @@ export class AxiosConfig {
     this.axiosInstance.defaults.headers.common['Authorization'] = `${token}`;
   }
 
-  static setEmailHeader(email: string) {
+  static setEmailCookie(email: string) {
     // this.axiosInstance.defaults.headers.common['EMAIL'] = `${email}`;
-    document.cookie = `EMAIL=${email}; path=/;`;
+    document.cookie = `EMAIL=${email}; path=/; max-age=10`;
   }
 }
