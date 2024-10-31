@@ -4,6 +4,7 @@ import { FormEvent, useState } from 'react';
 import ButtonWithSpinner from '@/components/button/ButtonWithSpinner';
 import useAuthMutation from '@/hooks/mutation/auth/useAuthMutation';
 import { useRouter } from 'next/navigation';
+import ButtonRouterBack from '@/components/button/ButtonRouterBack';
 
 export default function FindEmailForm() {
   const { onFindEmailMutation } = useAuthMutation();
@@ -33,7 +34,10 @@ export default function FindEmailForm() {
         <label htmlFor="name">이름</label>
         <input id="name" value={name} onChange={(e) => setName(e.target.value)} required />
       </div>
-      <ButtonWithSpinner type="submit" text="아이디 찾기" bgColor="blue" disabled={onFindEmailMutation.isLoading} />
+      <div className="flex flex-col gap-2">
+        <ButtonWithSpinner type="submit" text="아이디 찾기" bgColor="blue" disabled={onFindEmailMutation.isLoading} />
+        <ButtonRouterBack />
+      </div>
     </form>
   );
 }

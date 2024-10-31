@@ -6,7 +6,7 @@ import { IBoardCommentsRes } from '@/types/interface/board-comment';
 import ButtonWithSpinner from '@/components/button/ButtonWithSpinner';
 import { useState } from 'react';
 import useBoardCommentMutation from '@/hooks/mutation/board-comment/useBoardCommentMutation';
-import ButtonCommentDelete from '@/app/board/detail/[board_seq]/comment/components/ButtonCommentDelete';
+import ButtonCommentDelete from '@/app/board/detail/[board_seq]/comment/_components/ButtonCommentDelete';
 import useStorage from '@/hooks/useStorage';
 
 interface IProps {

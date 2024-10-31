@@ -1,4 +1,4 @@
-import SignInForm from '@/app/auth/components/SignInForm';
+import SignInForm from '@/app/auth/_form/SignInForm';
 
 interface IProps {
   searchParams: {

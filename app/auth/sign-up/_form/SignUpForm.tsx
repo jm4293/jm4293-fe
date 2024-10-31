@@ -5,6 +5,7 @@ import ButtonWithSpinner from '@/components/button/ButtonWithSpinner';
 import useAuthMutation from '@/hooks/mutation/auth/useAuthMutation';
 import { useRouter } from 'next/navigation';
 import { IAuthSignUpReq } from '@/types/interface/auth';
+import ButtonRouterBack from '@/components/button/ButtonRouterBack';
 
 export default function SignUpForm() {
   const { onSignUpMutation } = useAuthMutation();
@@ -72,7 +73,10 @@ export default function SignUpForm() {
           required
         />
       </div>
-      <ButtonWithSpinner type="submit" text="회원가입" bgColor="blue" disabled={onSignUpMutation.isLoading} />
+      <div className="flex flex-col gap-2">
+        <ButtonWithSpinner type="submit" text="회원가입" bgColor="blue" disabled={onSignUpMutation.isLoading} />
+        <ButtonRouterBack />
+      </div>
     </form>
   );
 }

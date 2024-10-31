@@ -1,8 +1,8 @@
 import { cookies } from 'next/headers';
-import ButtonRouterBack from '@/app/board/components/ButtonRouterBack';
-import ButtonDetailModify from '@/app/board/detail/[board_seq]/components/ButtonDetailModify';
+import ButtonRouterBack from '@/components/button/ButtonRouterBack';
+import ButtonDetailModify from '@/app/board/detail/[board_seq]/_components/ButtonDetailModify';
 import BoardComment from '@/app/board/detail/[board_seq]/comment/board-comment';
-import ButtonDetailDelete from '@/app/board/detail/[board_seq]/components/ButtonDetailDelete';
+import ButtonDetailDelete from '@/app/board/detail/[board_seq]/_components/ButtonDetailDelete';
 
 interface IProps {
   params: {

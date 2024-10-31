@@ -1,4 +1,4 @@
-import FindEmailForm from '@/app/auth/find-email/components/FindEmailForm';
+import FindEmailForm from '@/app/auth/find-email/_form/FindEmailForm';
 
 export default function FindEmailPage() {
   return (

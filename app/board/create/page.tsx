@@ -4,7 +4,7 @@ import { FormEvent, useState } from 'react';
 import ButtonWithSpinner from '@/components/button/ButtonWithSpinner';
 import useBoardMutation from '@/hooks/mutation/board/useBoardMutation';
 import { IBoardCreateReq } from '@/types/interface';
-import ButtonRouterBack from '@/app/board/components/ButtonRouterBack';
+import ButtonRouterBack from '@/components/button/ButtonRouterBack';
 
 export default function BoardCreatePage() {
   const { onBoardCreateMutation } = useBoardMutation();

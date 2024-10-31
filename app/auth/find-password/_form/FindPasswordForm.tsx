@@ -5,6 +5,7 @@ import useAuthMutation from '@/hooks/mutation/auth/useAuthMutation';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 import { IAuthVerifyEmailReq } from '@/types/interface/auth';
+import ButtonRouterBack from '@/components/button/ButtonRouterBack';
 
 export default function FindPasswordForm() {
   const { onVerifyEmailMutation, onChangePasswordMutation } = useAuthMutation();
@@ -59,12 +60,15 @@ export default function FindPasswordForm() {
             <label htmlFor="password">비밀번호</label>
             <input id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           </div>
-          <ButtonWithSpinner
-            type="submit"
-            text="비밀번호 변경"
-            bgColor="blue"
-            disabled={onChangePasswordMutation.isLoading}
-          />
+          <div className="flex flex-col gap-2">
+            <ButtonWithSpinner
+              type="submit"
+              text="비밀번호 변경"
+              bgColor="blue"
+              disabled={onChangePasswordMutation.isLoading}
+            />
+            <ButtonRouterBack />
+          </div>
         </form>
       ) : (
         <form onSubmit={onVerifyEmailHandler}>
@@ -88,12 +92,15 @@ export default function FindPasswordForm() {
               required
             />
           </div>
-          <ButtonWithSpinner
-            type="submit"
-            text="아이디 인증"
-            bgColor="blue"
-            disabled={onVerifyEmailMutation.isLoading}
-          />
+          <div className="flex flex-col gap-2">
+            <ButtonWithSpinner
+              type="submit"
+              text="아이디 인증"
+              bgColor="blue"
+              disabled={onVerifyEmailMutation.isLoading}
+            />
+            <ButtonRouterBack />
+          </div>
         </form>
       )}
     </>
