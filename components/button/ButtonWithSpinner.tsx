@@ -29,7 +29,7 @@ export default function ButtonWithSpinner({
   const buttonClass = classNames[bgColor];
 
   return (
-    <button className={`whitespace-normal ${buttonClass}`} type={type} onClick={onClick} disabled={disabled}>
+    <button className={`${buttonClass}`} type={type} onClick={onClick} disabled={disabled}>
       {disabled ? <ClipLoader size={15} color="#FFFFFF" /> : text}
     </button>
   );

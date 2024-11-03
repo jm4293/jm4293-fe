@@ -1,6 +1,4 @@
-'use client';
-
-import { useIsMutating } from 'react-query';
+import { useIsFetching } from 'react-query';
 import { ClipLoader } from 'react-spinners';
 import { CSSProperties } from 'react';
 
@@ -14,8 +12,12 @@ const override: CSSProperties = {
   transform: 'translate(-50%, -50%)',
 };
 
-export default function LoadingSpinner() {
-  const isMutating = useIsMutating();
+export default function LoadingSpinner({ children }: React.PropsWithChildren) {
+  const isFetching = useIsFetching();
 
-  return <>{isMutating > 0 && <ClipLoader cssOverride={override} />}</>;
+  if (isFetching > 0) {
+    return <ClipLoader cssOverride={override} />;
+  } else {
+    return <>{children}</>;
+  }
 }
