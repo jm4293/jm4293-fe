@@ -29,7 +29,8 @@ export default function QueryProviderConfig({ children }: React.PropsWithChildre
 
   return (
     <QueryClientProvider client={client}>
-      <LoadingSpinner>{children}</LoadingSpinner>
+      {/*<LoadingSpinner>{children}</LoadingSpinner>*/}
+      {children}
     </QueryClientProvider>
   );
 }

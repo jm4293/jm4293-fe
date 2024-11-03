@@ -20,7 +20,7 @@ export default function useAuthMutation() {
 
   const onSignInMutation = useMutation<MutationResponse<IAuthSignInRes>, MutationError, IAuthSignInReq>({
     mutationFn: (data) => AuthApi.signIn(data),
-    onSuccess: (res) => {
+    onSuccess: () => {
       router.push('/board');
     },
   });
@@ -37,9 +37,6 @@ export default function useAuthMutation() {
 
   const onVerifyEmailMutation = useMutation<MutationResponse<null>, MutationError, IAuthVerifyEmailReq>({
     mutationFn: (data: IAuthVerifyEmailReq) => AuthApi.verifyEmail(data),
-    onSuccess: (res) => {
-      console.log(res);
-    },
   });
 
   const onChangePasswordMutation = useMutation<

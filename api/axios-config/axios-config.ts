@@ -1,18 +1,16 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 
 interface IRequest {
   method: string;
   url: string;
-  params?: number;
-  queryString?: Record<string, string | number>;
-  data?: unknown;
+  params: Record<string, string | number> | null;
+  data: unknown | null;
   headers: {};
 }
 
 interface IGetRequest {
   url: string;
-  params?: number;
-  queryString?: Record<string, string | number>;
+  params?: Record<string, string | number>;
   headers?: {};
 }
 
@@ -24,22 +22,19 @@ interface IPostRequest {
 
 interface IPutRequest {
   url: string;
-  params?: number;
   data: unknown;
-  headers?: Record<string, string>;
+  headers?: {};
 }
 
 interface IDeleteRequest {
   url: string;
-  params: number;
-  headers?: Record<string, string>;
+  headers?: {};
 }
 
 interface IPatchRequest {
   url: string;
-  params?: number;
   data: unknown;
-  headers?: Record<string, string>;
+  headers?: {};
 }
 
 export class AxiosConfig {
@@ -49,7 +44,7 @@ export class AxiosConfig {
     withCredentials: true,
   });
 
-  private static async _request({ method, url, params, queryString, data, headers }: IRequest) {
+  private static async _request({ method, url, params, data, headers }: IRequest) {
     try {
       return await this._axiosInstance.request({ method, url, data, params, headers });
     } catch (error: unknown) {
@@ -72,24 +67,24 @@ export class AxiosConfig {
     }
   }
 
-  static async get({ url, params, queryString, headers = {} }: IGetRequest) {
-    return await this._request({ method: 'get', url, params, headers });
+  static async get({ url, params = {}, headers = {} }: IGetRequest) {
+    return await this._request({ method: 'get', url, params, data: null, headers });
   }
 
   static async post({ url, data, headers = {} }: IPostRequest) {
-    return await this._request({ method: 'post', url, data, headers });
+    return await this._request({ method: 'post', url, params: null, data, headers });
   }
 
-  static async put({ url, params, data, headers = {} }: IPutRequest) {
-    return await this._request({ method: 'put', url, data, headers });
+  static async put({ url, data, headers = {} }: IPutRequest) {
+    return await this._request({ method: 'put', url, params: null, data, headers });
   }
 
-  static async delete({ url, params, headers = {} }: IDeleteRequest) {
-    return await this._request({ method: 'delete', url: `${url}/${params}`, headers });
+  static async delete({ url, headers = {} }: IDeleteRequest) {
+    return await this._request({ method: 'delete', url, params: null, data: null, headers });
   }
 
-  static async patch({ url, params, data, headers = {} }: IPatchRequest) {
-    return await this._request({ method: 'patch', url, data, headers });
+  static async patch({ url, data, headers = {} }: IPatchRequest) {
+    return await this._request({ method: 'patch', url, params: null, data, headers });
   }
 
   static setAuthorizationHeader(token: string) {

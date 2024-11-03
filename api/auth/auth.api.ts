@@ -23,7 +23,7 @@ export class AuthApi extends AxiosConfig {
   }
 
   static async changePassword(data: IAuthChangePasswordReq) {
-    return await AxiosConfig.patch({ url: `${this._baseUrl}/change-password`, data });
+    return await AxiosConfig.put({ url: `${this._baseUrl}/change-password`, data });
   }
 
   static async findEmail(data: IAuthFindEmailReq) {

@@ -45,7 +45,7 @@ export async function middleware(req: NextRequest) {
 
       const renewAccessToken = responseData.data.accessToken;
 
-      renewNextResponse.cookies.set('accessToken', renewAccessToken, { httpOnly: true, maxAge: 5 });
+      renewNextResponse.cookies.set('accessToken', renewAccessToken, { httpOnly: true, maxAge: 60 * 60 });
     } catch (error) {
       console.error('refresh token error', error);
     }
