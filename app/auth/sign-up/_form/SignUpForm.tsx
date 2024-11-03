@@ -3,13 +3,11 @@
 import { FormEvent, useState } from 'react';
 import ButtonWithSpinner from '@/components/button/ButtonWithSpinner';
 import useAuthMutation from '@/hooks/mutation/auth/useAuthMutation';
-import { useRouter } from 'next/navigation';
 import { IAuthSignUpReq } from '@/types/interface/auth';
 import ButtonRouterBack from '@/components/button/ButtonRouterBack';
 
 export default function SignUpForm() {
   const { onSignUpMutation } = useAuthMutation();
-  const router = useRouter();
 
   const [data, setData] = useState<IAuthSignUpReq>({
     name: '',
@@ -32,14 +30,7 @@ export default function SignUpForm() {
       return alert('비밀번호를 입력해주세요.');
     }
 
-    const response = await onSignUpMutation.mutateAsync(data);
-
-    if (!!response) {
-      const { email } = response;
-
-      alert('회원가입이 완료되었습니다.');
-      router.replace(`/auth?email=${email}`);
-    }
+    onSignUpMutation.mutate(data);
   };
 
   return (

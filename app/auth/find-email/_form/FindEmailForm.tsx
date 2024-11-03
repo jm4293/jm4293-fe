@@ -3,12 +3,10 @@
 import { FormEvent, useState } from 'react';
 import ButtonWithSpinner from '@/components/button/ButtonWithSpinner';
 import useAuthMutation from '@/hooks/mutation/auth/useAuthMutation';
-import { useRouter } from 'next/navigation';
 import ButtonRouterBack from '@/components/button/ButtonRouterBack';
 
 export default function FindEmailForm() {
   const { onFindEmailMutation } = useAuthMutation();
-  const router = useRouter();
 
   const [name, setName] = useState('');
 
@@ -19,12 +17,7 @@ export default function FindEmailForm() {
       return alert('이름을 입력해주세요');
     }
 
-    const response = await onFindEmailMutation.mutateAsync({ name });
-
-    if (!!response) {
-      alert(`아이디는 ${response.email} 입니다.`);
-      router.replace(`/auth?email=${response.email}`);
-    }
+    onFindEmailMutation.mutate({ name });
   };
 
   return (

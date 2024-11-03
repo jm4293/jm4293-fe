@@ -56,17 +56,18 @@ export default function Pagination({ totalCount, currentPage }: IProps) {
         &lt;
       </button>
 
-      {[...Array(endPage - startPage + 1)].map((_, idx) => {
-        const page = startPage + idx;
-        return (
-          <button
-            key={page}
-            className={`text-black ${page === currentPage ? 'text-black font-bold' : 'text-gray-400'}`}
-            onClick={() => handlePageClick(page)}>
-            {page}
-          </button>
-        );
-      })}
+      {endPage - startPage + 1 > 0 &&
+        [...Array(endPage - startPage + 1)].map((_, idx) => {
+          const page = startPage + idx;
+          return (
+            <button
+              key={page}
+              className={`text-black ${page === currentPage ? 'text-black font-bold' : 'text-gray-400'}`}
+              onClick={() => handlePageClick(page)}>
+              {page}
+            </button>
+          );
+        })}
 
       <button
         className="text-black disabled:text-gray-400"

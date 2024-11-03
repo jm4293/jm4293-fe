@@ -3,7 +3,7 @@
 import ButtonWithSpinner from '@/components/button/ButtonWithSpinner';
 import useAuthMutation from '@/hooks/mutation/auth/useAuthMutation';
 import { useRouter } from 'next/navigation';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { IAuthVerifyEmailReq } from '@/types/interface/auth';
 import ButtonRouterBack from '@/components/button/ButtonRouterBack';
 
@@ -12,43 +12,38 @@ export default function FindPasswordForm() {
   const router = useRouter();
 
   const [isVerified, setIsVerified] = useState<boolean>(false);
-  const [data, setData] = useState<IAuthVerifyEmailReq>({
-    name: '',
-    email: '',
-  });
-
-  const [password, setPassword] = useState<string>('');
+  const [first, setFirst] = useState<IAuthVerifyEmailReq>({ name: '', email: '' });
+  const [second, setSecond] = useState<string>('');
 
   const onVerifyEmailHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!data.name) {
+    if (!first.name) {
       return alert('이름을 입력해주세요');
     }
 
-    if (!data.email) {
+    if (!first.email) {
       return alert('아이디를 입력해주세요');
     }
 
-    const response = await onVerifyEmailMutation.mutateAsync(data);
-
-    setIsVerified(response);
+    onVerifyEmailMutation.mutate(first);
   };
 
   const onFindPasswordHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!password) {
+    if (!second) {
       return alert('비밀번호를 입력해주세요');
     }
 
-    const response = await onChangePasswordMutation.mutateAsync({ email: data.email, password });
-
-    if (response) {
-      alert('비밀번호 변경이 완료되었습니다.');
-      router.replace(`/auth?email=${data.email}`);
-    }
+    onChangePasswordMutation.mutate({ email: first.email, password: second });
   };
+
+  useEffect(() => {
+    if (onVerifyEmailMutation.isSuccess) {
+      setIsVerified(true);
+    }
+  }, [onVerifyEmailMutation.isSuccess]);
 
   return (
     <>
@@ -58,7 +53,7 @@ export default function FindPasswordForm() {
 
           <div className="input-group">
             <label htmlFor="password">비밀번호</label>
-            <input id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            <input id="password" value={second} onChange={(e) => setSecond(e.target.value)} required />
           </div>
           <div className="flex flex-col gap-2">
             <ButtonWithSpinner
@@ -78,8 +73,8 @@ export default function FindPasswordForm() {
             <label htmlFor="name">이름</label>
             <input
               id="name"
-              value={data.name}
-              onChange={(e) => setData((prev) => ({ ...prev, name: e.target.value }))}
+              value={first.name}
+              onChange={(e) => setFirst((prev) => ({ ...prev, name: e.target.value }))}
               required
             />
           </div>
@@ -87,8 +82,8 @@ export default function FindPasswordForm() {
             <label htmlFor="email">아이디</label>
             <input
               id="email"
-              value={data.email}
-              onChange={(e) => setData((prev) => ({ ...prev, email: e.target.value }))}
+              value={first.email}
+              onChange={(e) => setFirst((prev) => ({ ...prev, email: e.target.value }))}
               required
             />
           </div>

@@ -1,7 +1,6 @@
 'use client';
 
 import { FormEvent, useEffect, useRef, useState } from 'react';
-import useStorage from '@/hooks/useStorage';
 import useAuthMutation from '@/hooks/mutation/auth/useAuthMutation';
 import { IAuthSignInReq } from '@/types/interface/auth';
 import ButtonWithSpinner from '@/components/button/ButtonWithSpinner';
@@ -9,10 +8,10 @@ import { useRouter } from 'next/navigation';
 
 interface IProps {
   email?: string;
+  expired?: string;
 }
 
-export default function SignInForm({ email = undefined }: IProps) {
-  const { session } = useStorage();
+export default function SignInForm({ email, expired }: IProps) {
   const { onSignInMutation } = useAuthMutation();
   const router = useRouter();
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -22,16 +21,7 @@ export default function SignInForm({ email = undefined }: IProps) {
   const onSubmitHandle = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const response = await onSignInMutation.mutateAsync(signInData);
-
-    if (!!response) {
-      const { email, name } = response;
-
-      session.set('email', email);
-      session.set('name', name);
-
-      router.push('/board');
-    }
+    onSignInMutation.mutate(signInData);
   };
 
   const onSignUpHandle = () => {
@@ -52,6 +42,12 @@ export default function SignInForm({ email = undefined }: IProps) {
       passwordRef.current?.focus();
     }
   }, [email]);
+
+  // useEffect(() => {
+  //   if (expired) {
+  //     alert('세션이 만료되었습니다. 다시 로그인해주세요.');
+  //   }
+  // }, []);
 
   return (
     <form onSubmit={onSubmitHandle}>
