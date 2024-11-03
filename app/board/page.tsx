@@ -12,49 +12,27 @@ interface IProps {
   };
 }
 
-const fetchConfig = new FetchConfig();
-
 export default async function BoardListPage({ searchParams }: IProps) {
-  const token = cookies().get('accessToken');
-
-  console.log('board token', token);
-
+  const accessToken = cookies().get('accessToken');
   const currentPage = searchParams.page ? parseInt(searchParams.page, 10) : 1;
 
-  // try {
-  //   const res = await fetch(
-  //     `${process.env.NEXT_PUBLIC_API_URL}:${process.env.NEXT_PUBLIC_API_PORT}/${process.env.NEXT_PUBLIC_GLOBAL_PREFIX}/board/board-list?page=${currentPage}&count=${BOARD_ITEM_COUNT}`,
-  //     {
-  //       method: 'GET',
-  //       credentials: 'include',
-  //       headers: {
-  //         Cookie: `accessToken=${token?.value}`,
-  //       },
-  //     },
-  //   );
-  //
-  //   // 네트워크 에러가 없었는지 확인
-  //   if (!res.ok) {
-  //     throw new Error(`HTTP error! status: ${res.status}`);
-  //   }
-  //
-  //   const { data } = await res.json();
-  //
-  //   // JSON 파싱 에러가 없었는지 확인
-  //   if (!data) {
-  //     throw new Error('API returned no data.');
-  //   }
-  //
-  //   // 데이터 처리
-  //   console.log(data);
-  // } catch (error) {
-  //   console.error('API 호출 중 에러 발생', error);
-  // }
+  let boardList: IBoardListRes[] = [];
+  let totalCount = 0;
 
-  const data = await fetchConfig.get('board/board-list', {
-    page: currentPage,
-    count: BOARD_ITEM_COUNT,
-  });
+  try {
+    const response = await FetchConfig.get<{ list: IBoardListRes[]; totalCount: number }>({
+      url: 'board/board-list',
+      queryString: { page: currentPage, count: BOARD_ITEM_COUNT },
+      headers: { Cookie: `accessToken=${accessToken?.value}` },
+    });
+
+    const { data, result, message } = response;
+
+    boardList = data.list;
+    totalCount = data.totalCount;
+  } catch (error) {
+    console.error('API 호출 중 에러 발생', error);
+  }
 
   return (
     <div className="container">
@@ -64,14 +42,14 @@ export default async function BoardListPage({ searchParams }: IProps) {
       </div>
 
       <ul>
-        {!!data.list ? (
-          data.list.map((board: IBoardListRes) => <BoardList key={board.seq} board={board} />)
+        {boardList.length > 0 ? (
+          boardList.map((board: IBoardListRes) => <BoardList key={board.seq} board={board} />)
         ) : (
           <li>게시글이 없습니다.</li>
         )}
       </ul>
 
-      <Pagination {...{ totalCount: data.totalCount, currentPage }} />
+      <Pagination {...{ totalCount: totalCount, currentPage }} />
     </div>
   );
 }

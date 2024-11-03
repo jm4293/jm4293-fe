@@ -1,87 +1,126 @@
-import { cookies } from 'next/headers';
+import { ResponseConfig } from '@/types/interface';
+
+interface IRequest {
+  method: string;
+  url: string;
+  params?: number;
+  queryString?: Record<string, string | number>;
+  body?: unknown;
+  headers?: Record<string, string>;
+}
+
+interface IGetRequest {
+  url: string;
+  params?: number;
+  queryString?: Record<string, string | number>;
+  headers?: Record<string, string>;
+}
+
+interface IPostRequest {
+  url: string;
+  body: unknown;
+  headers?: Record<string, string>;
+}
+
+interface IPutRequest {
+  url: string;
+  params?: number;
+  body: unknown;
+  headers?: Record<string, string>;
+}
+
+interface IDeleteRequest {
+  url: string;
+  params: number;
+  headers?: Record<string, string>;
+}
+
+interface IPatchRequest {
+  url: string;
+  params?: number;
+  body: unknown;
+  headers?: Record<string, string>;
+}
 
 export class FetchConfig {
-  private apiURL = `${process.env.NEXT_PUBLIC_API_URL}:${process.env.NEXT_PUBLIC_API_PORT}/${process.env.NEXT_PUBLIC_GLOBAL_PREFIX}`;
-  private accessToken = cookies().get('accessToken')?.value;
+  private static _baseURL = `${process.env.NEXT_PUBLIC_API_URL}:${process.env.NEXT_PUBLIC_API_PORT}/${process.env.NEXT_PUBLIC_GLOBAL_PREFIX}`;
 
-  private buildUrl(endpoint: string, queryParams?: Record<string, string | number>) {
-    const url = new URL(`${this.apiURL}/${endpoint}`);
+  private static async _request({ method, url, params, queryString, body, headers }: IRequest) {
+    let fullUrlPath = `${this._baseURL}/${url}`;
 
-    if (queryParams) {
-      Object.entries(queryParams).forEach(([key, value]) => url.searchParams.append(key, String(value)));
+    if (params) {
+      fullUrlPath += `/${params}`;
     }
 
-    return url.toString();
-  }
+    const fullUrl = new URL(fullUrlPath);
 
-  private async request(
-    method: string,
-    endpoint: string,
-    body?: Record<string, any>,
-    queryParams?: Record<string, string | number>,
-  ): Promise<any> {
-    const url = this.buildUrl(endpoint, queryParams);
+    if (queryString) {
+      Object.entries(queryString).forEach(([key, value]) => fullUrl.searchParams.append(key, String(value)));
+    }
 
     const options: RequestInit = {
       method,
       headers: {
-        Cookie: `accessToken=${this.accessToken}`,
         'Content-Type': 'application/json',
+        ...headers,
       },
-
+      body: body ? JSON.stringify(body) : undefined,
       credentials: 'include',
     };
 
+    console.log('fetch url', fullUrl.toString());
+    console.log('fetch headers', headers);
+
     try {
-      const res = await fetch(url, options);
+      const response = await fetch(fullUrl.toString(), options);
 
-      if (!res.ok) {
-        throw new Error(String(res.status));
-      }
+      // if (!response.ok) {
+      //   throw new Error(String(response.status));
+      // }
 
-      const { data } = await res.json();
+      // const result = await response.json();
+      // return result.data || result;
 
-      return data;
-    } catch (error) {
-      switch (error) {
-        case 400:
-          alert('400');
-          break;
-        case 401:
-          break;
-        case 404:
-          alert('404');
-          break;
-        case 500:
-          alert('500');
-          break;
-        default:
-          alert('default');
-          break;
-      }
+      return await response.json();
+    } catch (error: unknown) {
+      // switch (error.message) {
+      //   case '400':
+      //     break;
+      //   case '401':
+      //     break;
+      //   case '404':
+      //     break;
+      //   case '500':
+      //     break;
+      //   default:
+      //     break;
+      // }
 
       throw error;
     }
   }
 
-  async get(endpoint: string, queryParams: Record<string, string | number> = {}) {
-    return this.request('GET', endpoint, undefined, queryParams);
+  static async get<T>({ url, params, queryString, headers = {} }: IGetRequest): Promise<ResponseConfig<T>> {
+    return await this._request({ method: 'GET', url, params, queryString, headers });
   }
 
-  async post(endpoint: string, body: Record<string, any>) {
-    return this.request('POST', endpoint, body);
+  static async post<T>({ url, body, headers = {} }: IPostRequest): Promise<ResponseConfig<T>> {
+    return await this._request({ method: 'POST', url, body, headers });
   }
 
-  // async patch(endpoint: string, body: Record<string, any>) {
-  //   return this.request('PATCH', endpoint, body);
-  // }
+  static async put<T>({ url, params, body, headers = {} }: IPutRequest): Promise<ResponseConfig<T>> {
+    return await this._request({ method: 'PUT', url, params, body, headers });
+  }
 
-  // async put(endpoint: string, body: Record<string, any>) {
-  //   return this.request('PUT', endpoint, body);
-  // }
-  //
+  static async delete<T>({ url, params, headers = {} }: IDeleteRequest): Promise<ResponseConfig<T>> {
+    return await this._request({ method: 'DELETE', url, params, headers });
+  }
 
-  // async delete(endpoint: string, body?: Record<string, any>) {
-  //   return this.request('DELETE', endpoint, body);
-  // }
+  static async patch<T>({ url, params, body, headers = {} }: IPatchRequest): Promise<ResponseConfig<T>> {
+    return await this._request({ method: 'PATCH', url, params, body, headers });
+  }
+
+  static setAuthorizationHeader(token: string) {
+    document.cookie = `Authorization=${token}; path=/; max-age=300`;
+  }
 }
