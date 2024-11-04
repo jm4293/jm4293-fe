@@ -13,7 +13,7 @@ export default function ButtonDetailDelete({ board_seq }: IProps) {
     e.preventDefault();
 
     if (confirm('정말 삭제하시겠습니까?')) {
-      onBoardDeleteMutation.mutate(Number(board_seq));
+      onBoardDeleteMutation.mutate({ seq: Number(board_seq) });
     }
   };
 

@@ -1,30 +1,39 @@
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { useRouter } from 'next/navigation';
-import { IBoardCreateReq, IBoardCreateRes, ResponseConfig } from '@/types/interface';
+import { IBoardCreateReq, IBoardDeleteReq, IBoardModifyReq, MutationError, MutationResponse } from '@/types/interface';
 import { BoardApi } from '@/api/board';
 
 export default function useBoardMutation() {
   const router = useRouter();
+  const queryClient = useQueryClient();
 
-  const onBoardCreateMutation = useMutation({
-    mutationFn: (data: IBoardCreateReq) => BoardApi.boardCreate<IBoardCreateRes, IBoardCreateReq>(data),
+  const onBoardCreateMutation = useMutation<MutationResponse<null>, MutationError, IBoardCreateReq>({
+    mutationFn: (data) => BoardApi.boardCreate(data),
     onSuccess: (res) => {
-      router.push('/board');
+      router.replace('/board');
     },
-    onError: (error) => {},
   });
 
-  const onBoardDeleteMutation = useMutation({
-    mutationFn: (seq: number) => BoardApi.boardDelete<ResponseConfig<boolean>>(seq),
-    onSuccess: (res) => {
-      router.back();
+  const onBoardModifyMutation = useMutation<MutationResponse<null>, MutationError, IBoardModifyReq>({
+    mutationFn: (data) => BoardApi.boardModify(data),
+    onSuccess: (res, variables) => {
+      const { seq } = variables;
+      router.push(`/board/detail/${seq}`);
+      router.refresh();
+    },
+  });
+
+  const onBoardDeleteMutation = useMutation<MutationResponse<null>, MutationError, IBoardDeleteReq>({
+    mutationFn: ({ seq }) => BoardApi.boardDelete(seq),
+    onSuccess: () => {
+      router.replace('/board');
       alert('삭제되었습니다.');
     },
-    onError: (error) => {},
   });
 
   return {
     onBoardCreateMutation,
+    onBoardModifyMutation,
     onBoardDeleteMutation,
   };
 }

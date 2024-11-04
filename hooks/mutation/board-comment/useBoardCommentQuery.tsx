@@ -1,5 +1,4 @@
 import { useQuery } from 'react-query';
-import { IBoardCommentsRes, ResponseConfig } from '@/types/interface';
 import { BoardCommentApi } from '@/api/board-comment';
 
 interface IProps {
@@ -7,15 +6,10 @@ interface IProps {
 }
 
 export default function useBoardCommentQuery({ board_seq }: IProps) {
-  const { data: boardComments = [], isLoading: boardCommentIsLoading } = useQuery({
+  return useQuery({
     queryKey: ['boardCommentList', board_seq],
-    queryFn: () => BoardCommentApi.boardCommentList<ResponseConfig<IBoardCommentsRes[]>>(board_seq),
-    enabled: !!board_seq,
-    select: (response) => response?.data.data || [],
+    queryFn: () => BoardCommentApi.boardCommentList(board_seq),
+    // enabled: !!board_seq,
+    select: (res) => res?.data.data || [],
   });
-
-  return {
-    boardComments,
-    boardCommentIsLoading,
-  };
 }

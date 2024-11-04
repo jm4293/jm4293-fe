@@ -1,4 +1,4 @@
-import { jwtVerify } from 'jose';
+import { decodeJwt, jwtVerify } from 'jose';
 
 export async function verifyToken(token: string) {
   try {
@@ -13,6 +13,15 @@ export async function verifyToken(token: string) {
     return payload;
   } catch (error) {
     console.error('JWT verification error:', error);
+    return null;
+  }
+}
+
+export function decodeToken(token: string) {
+  try {
+    return decodeJwt(token);
+  } catch (error) {
+    console.error('JWT decoding error:', error);
     return null;
   }
 }

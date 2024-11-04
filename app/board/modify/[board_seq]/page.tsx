@@ -1,10 +1,11 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { IBoardCreateReq } from '@/types/interface/board';
 import ButtonWithSpinner from '@/components/button/ButtonWithSpinner';
-import useBoardMutation from '@/hooks/mutation/board/useBoardMutation';
 import ButtonRouterBack from '@/components/button/ButtonRouterBack';
+import useBoardQuery from '@/hooks/mutation/board/useBoardQuery';
+import useBoardMutation from '@/hooks/mutation/board/useBoardMutation';
 
 interface IProps {
   params: {
@@ -15,7 +16,8 @@ interface IProps {
 export default function BoardModifyPage({ params }: IProps) {
   const { board_seq } = params;
 
-  const {} = useBoardMutation();
+  const { data: board, isSuccess } = useBoardQuery({ board_seq: Number(board_seq) });
+  const { onBoardModifyMutation } = useBoardMutation();
 
   const [data, setData] = useState<IBoardCreateReq>({
     title: '',
@@ -25,14 +27,22 @@ export default function BoardModifyPage({ params }: IProps) {
   const onSubmitHandle = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!data.title) {
+    if (!data.title || data.title.trim().length === 0) {
       return alert('제목을 입력해주세요.');
     }
 
-    if (!data.content) {
+    if (!data.content || data.content.trim().length === 0) {
       return alert('내용을 입력해주세요.');
     }
+
+    onBoardModifyMutation.mutate({ seq: Number(board_seq), ...data });
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      setData({ title: board.title, content: board.content });
+    }
+  }, [isSuccess]);
 
   return (
     <div className="container">

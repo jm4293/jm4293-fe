@@ -1,38 +1,18 @@
 import { AxiosConfig } from '@/api/axios-config';
+import { IBoardCommentCreateReq } from '@/types/interface';
 
 export class BoardCommentApi extends AxiosConfig {
   static _baseUrl = `${process.env.NEXT_PUBLIC_GLOBAL_PREFIX}/board-comment`;
 
-  static async boardCommentList<T>(params: number) {
-    try {
-      return await AxiosConfig.get<T>({
-        url: `${this._baseUrl}/board-comment-list`,
-        params,
-      });
-    } catch (error) {
-      throw error;
-    }
+  static async boardCommentList(params: number) {
+    return await AxiosConfig.get({ url: `${this._baseUrl}/board-comment-list/${params}` });
   }
 
-  static async boardCommentCreate<T, D>(data: D) {
-    try {
-      return await AxiosConfig.post<T, D>({
-        url: `${this._baseUrl}/board-comment-create`,
-        data,
-      });
-    } catch (error) {
-      throw error;
-    }
+  static async boardCommentCreate(data: IBoardCommentCreateReq) {
+    return await AxiosConfig.post({ url: `${this._baseUrl}/board-comment-create`, data });
   }
 
-  static async boardCommentDelete<T>(params: number) {
-    try {
-      return await AxiosConfig.delete<T>({
-        url: `${this._baseUrl}/board-comment-delete`,
-        params,
-      });
-    } catch (error) {
-      throw error;
-    }
+  static async boardCommentDelete(params: number) {
+    return await AxiosConfig.delete({ url: `${this._baseUrl}/board-comment-delete/${params}` });
   }
 }

@@ -10,8 +10,7 @@ export default function ButtonDetailModify({ board_seq }: IProps) {
   const router = useRouter();
 
   const onModifyHandle = () => {
-    alert('3대 명검');
-    // router.push(`/board/modify/${board_seq}`);
+    router.push(`/board/modify/${board_seq}`);
   };
 
   return (

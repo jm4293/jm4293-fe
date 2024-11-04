@@ -2,11 +2,19 @@
 
 import { useRouter } from 'next/navigation';
 
-export default function ButtonRouterBack() {
+interface IProps {
+  url?: string;
+}
+
+export default function ButtonRouterBack({ url }: IProps) {
   const router = useRouter();
 
   const onBackHandle = () => {
-    router.back();
+    if (url) {
+      router.push(url);
+    } else {
+      router.back();
+    }
   };
 
   return (
