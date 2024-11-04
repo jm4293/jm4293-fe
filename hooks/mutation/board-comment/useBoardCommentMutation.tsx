@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { IBoardCommentCreateReq, IBoardCommentDeleteReq, MutationError, MutationResponse } from '@/types/interface';
-import { BoardCommentApi } from '@/api/board-comment';
+import { BoardCommentApi } from '@/api-url/board-comment';
 
 export default function useBoardCommentMutation() {
   const queryClient = useQueryClient();

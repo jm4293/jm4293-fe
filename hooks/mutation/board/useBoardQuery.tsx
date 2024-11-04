@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { BoardApi } from '@/api/board';
+import { BoardApi } from '@/api-url/board';
 
 interface IProps {
   board_seq: number;

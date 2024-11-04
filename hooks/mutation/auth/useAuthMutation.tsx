@@ -12,8 +12,8 @@ import {
   MutationError,
   MutationResponse,
 } from '@/types/interface';
-import { AuthApi } from '@/api/auth';
 import { useRouter } from 'next/navigation';
+import { AuthApi } from '@/api-url/auth';
 
 export default function useAuthMutation() {
   const router = useRouter();

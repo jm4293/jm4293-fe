@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { useRouter } from 'next/navigation';
 import { IBoardCreateReq, IBoardDeleteReq, IBoardModifyReq, MutationError, MutationResponse } from '@/types/interface';
-import { BoardApi } from '@/api/board';
+import { BoardApi } from '@/api-url/board';
 
 export default function useBoardMutation() {
   const router = useRouter();
