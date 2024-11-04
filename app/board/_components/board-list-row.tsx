@@ -24,8 +24,8 @@ export default function BoardList({ board }: IProps) {
           {board.seq}. {board.title}
         </p>
         <div className="flex gap-2">
-          <p>{board.writerName}</p>
-          <p>{koLocaleDayjs(board.createdAt).format('YYYY-MM-DD')}</p>
+          <p className="whitespace-nowrap">{board.writerName}</p>
+          <p className="whitespace-nowrap">{koLocaleDayjs(board.createdAt).format('YYYY-MM-DD')}</p>
         </div>
       </div>
     </li>

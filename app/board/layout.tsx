@@ -2,7 +2,11 @@ export default function BoardLayout({ children }: Readonly<{ children: React.Rea
   return (
     <html lang="ko">
       <body>
-        <div className="w-full h-full flex flex-col justify-center ">{children}</div>
+        <div
+          className="w-full flex flex-col justify-center"
+          style={{ position: 'absolute', top: '50%', transform: 'translate(0, -50%)' }}>
+          {children}
+        </div>
       </body>
     </html>
   );

@@ -36,7 +36,7 @@ export default async function BoardListPage({ searchParams }: IProps) {
 
   return (
     <div className="container">
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-between items-center mt-10 mb-4">
         <h1 className="mx-auto">게시판 리스트</h1>
         <BoardListHeader />
       </div>
