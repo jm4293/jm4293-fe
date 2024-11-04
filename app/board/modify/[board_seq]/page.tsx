@@ -47,7 +47,7 @@ export default function BoardModifyPage({ params }: IProps) {
   return (
     <div className="container">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="mx-auto">게시글 작성</h1>
+        <h1 className="mx-auto">게시글 수정</h1>
       </div>
 
       <form className="w-full" onSubmit={onSubmitHandle}>
