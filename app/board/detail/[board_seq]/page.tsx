@@ -40,7 +40,7 @@ export default async function BoardDetailPage({ params }: IProps) {
 
   return (
     <>
-      <div className="container">
+      <div className="container mb-4">
         <div className="flex justify-between items-center mb-4">
           <h1 className="mx-auto">게시글</h1>
         </div>
