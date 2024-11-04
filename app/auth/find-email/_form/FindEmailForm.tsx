@@ -21,7 +21,7 @@ export default function FindEmailForm() {
   };
 
   return (
-    <form onSubmit={onFindEmailHandler}>
+    <form className="p-4" onSubmit={onFindEmailHandler}>
       <h2 className="text-center mb-2">아이디 찾기</h2>
       <div className="input-group">
         <label htmlFor="name">이름</label>

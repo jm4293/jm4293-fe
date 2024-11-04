@@ -34,7 +34,7 @@ export default function SignUpForm() {
   };
 
   return (
-    <form onSubmit={onSignUpHandler}>
+    <form className="p-4" onSubmit={onSignUpHandler}>
       <h2 className="text-center mb-2">회원가입</h2>
       <div className="input-group">
         <label htmlFor="name">이름</label>

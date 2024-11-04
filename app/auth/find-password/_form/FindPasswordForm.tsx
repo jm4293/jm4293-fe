@@ -48,7 +48,7 @@ export default function FindPasswordForm() {
   return (
     <>
       {isVerified ? (
-        <form onSubmit={onFindPasswordHandler}>
+        <form className="p-4" onSubmit={onFindPasswordHandler}>
           <h2 className="text-center mb-2">비밀번호 변경</h2>
 
           <div className="input-group">
@@ -66,7 +66,7 @@ export default function FindPasswordForm() {
           </div>
         </form>
       ) : (
-        <form onSubmit={onVerifyEmailHandler}>
+        <form className="p-4" onSubmit={onVerifyEmailHandler}>
           <h2 className="text-center mb-2">아이디 인증</h2>
 
           <div className="input-group">

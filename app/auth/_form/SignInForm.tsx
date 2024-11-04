@@ -50,7 +50,7 @@ export default function SignInForm({ email, expired }: IProps) {
   // }, []);
 
   return (
-    <form onSubmit={onSubmitHandle}>
+    <form className="p-4" onSubmit={onSubmitHandle}>
       <h2 className="text-center mb-2">로그인</h2>
       <div className="input-group">
         <label htmlFor="email">아이디</label>
