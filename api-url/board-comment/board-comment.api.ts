@@ -1,4 +1,4 @@
-import { AxiosConfig } from '@/api/axios-config';
+import { AxiosConfig } from '../../commons/axios-config';
 import { IBoardCommentCreateReq } from '@/types/interface';
 
 export class BoardCommentApi extends AxiosConfig {

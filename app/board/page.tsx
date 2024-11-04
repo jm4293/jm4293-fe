@@ -4,7 +4,7 @@ import { BOARD_ITEM_COUNT } from '@/commons/constant';
 import { IBoardListRes } from '@/types/interface/board/board.response.interface';
 import BoardListHeader from '@/app/board/_components/board-list-header';
 import BoardList from '@/app/board/_components/board-list-row';
-import { FetchConfig } from '@/api/fetch-config/fetch-config';
+import { FetchConfig } from '@/commons/fetch-config/fetch-config';
 
 interface IProps {
   searchParams: {

@@ -80,7 +80,7 @@ export class AxiosConfig {
   }
 
   static async delete({ url, headers = {} }: IDeleteRequest) {
-    return await this._request({ method: 'delete', url, params: null, data: null, headers });
+    return await this._request({ method: 'delete', url, params: null, data: {}, headers });
   }
 
   static async patch({ url, data, headers = {} }: IPatchRequest) {

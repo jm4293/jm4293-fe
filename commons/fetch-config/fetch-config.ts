@@ -74,13 +74,6 @@ export class FetchConfig {
     try {
       const response = await fetch(fullUrl.toString(), options);
 
-      // if (!response.ok) {
-      //   throw new Error(String(response.status));
-      // }
-
-      // const result = await response.json();
-      // return result.data || result;
-
       return await response.json();
     } catch (error: unknown) {
       // switch (error.message) {
@@ -118,9 +111,5 @@ export class FetchConfig {
 
   static async patch<T>({ url, params, body, headers = {} }: IPatchRequest): Promise<ResponseConfig<T>> {
     return await this._request({ method: 'PATCH', url, params, body, headers });
-  }
-
-  static setAuthorizationHeader(token: string) {
-    document.cookie = `Authorization=${token}; path=/; max-age=300`;
   }
 }

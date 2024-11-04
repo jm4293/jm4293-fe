@@ -1,4 +1,4 @@
-import { AxiosConfig } from '@/api/axios-config';
+import { AxiosConfig } from '../../commons/axios-config';
 import { IBoardCreateReq, IBoardDeleteReq, IBoardModifyReq } from '@/types/interface';
 
 export class BoardApi extends AxiosConfig {

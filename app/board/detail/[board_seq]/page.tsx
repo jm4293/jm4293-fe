@@ -3,7 +3,7 @@ import ButtonRouterBack from '@/components/button/ButtonRouterBack';
 import ButtonDetailModify from '@/app/board/detail/[board_seq]/_components/ButtonDetailModify';
 import BoardComment from '@/app/board/detail/[board_seq]/comment/board-comment';
 import ButtonDetailDelete from '@/app/board/detail/[board_seq]/_components/ButtonDetailDelete';
-import { FetchConfig } from '@/api/fetch-config/fetch-config';
+import { FetchConfig } from '@/commons/fetch-config/fetch-config';
 import { IBoardDetailRes } from '@/types/interface';
 import { decodeToken } from '@/utils/verify';
 
