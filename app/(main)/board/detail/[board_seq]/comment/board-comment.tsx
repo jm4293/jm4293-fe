@@ -5,7 +5,7 @@ import useBoardCommentQuery from '@/hooks/mutation/board-comment/useBoardComment
 import { IBoardCommentsRes } from '@/types/interface/board-comment';
 import { useState } from 'react';
 import useBoardCommentMutation from '@/hooks/mutation/board-comment/useBoardCommentMutation';
-import ButtonCommentDelete from '@/app/board/detail/[board_seq]/comment/_components/ButtonCommentDelete';
+import ButtonCommentDelete from '@/app/(main)/board/detail/[board_seq]/comment/_components/ButtonCommentDelete';
 import ButtonWithSpinner from '@/components/button/ButtonWithSpinner';
 
 interface IProps {
@@ -52,7 +52,7 @@ export default function BoardComment({ board_seq, email }: IProps) {
         <div>댓글이 없습니다.</div>
       )}
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-4">
         <textarea className="w-full resize-none" value={content} onChange={(e) => setContent(e.target.value)} />
         <ButtonWithSpinner
           type="button"

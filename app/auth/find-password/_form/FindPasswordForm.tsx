@@ -48,14 +48,14 @@ export default function FindPasswordForm() {
   return (
     <>
       {isVerified ? (
-        <form className="p-4" onSubmit={onFindPasswordHandler}>
-          <h2 className="text-center mb-2">비밀번호 변경</h2>
+        <form className="flex flex-col gap-4 p-4" onSubmit={onFindPasswordHandler}>
+          <h2 className="text-center">비밀번호 변경</h2>
 
-          <div className="input-group">
+          <div>
             <label htmlFor="password">비밀번호</label>
             <input id="password" value={second} onChange={(e) => setSecond(e.target.value)} required />
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-4">
             <ButtonWithSpinner
               type="submit"
               text="비밀번호 변경"
@@ -66,10 +66,10 @@ export default function FindPasswordForm() {
           </div>
         </form>
       ) : (
-        <form className="p-4" onSubmit={onVerifyEmailHandler}>
-          <h2 className="text-center mb-2">아이디 인증</h2>
+        <form className="flex flex-col gap-4 p-4" onSubmit={onVerifyEmailHandler}>
+          <h2 className="text-center">아이디 인증</h2>
 
-          <div className="input-group">
+          <div>
             <label htmlFor="name">이름</label>
             <input
               id="name"
@@ -78,7 +78,7 @@ export default function FindPasswordForm() {
               required
             />
           </div>
-          <div className="input-group">
+          <div>
             <label htmlFor="email">아이디</label>
             <input
               id="email"
@@ -87,7 +87,7 @@ export default function FindPasswordForm() {
               required
             />
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-4">
             <ButtonWithSpinner
               type="submit"
               text="아이디 인증"

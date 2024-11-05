@@ -50,9 +50,9 @@ export default function SignInForm({ email, expired }: IProps) {
   // }, []);
 
   return (
-    <form className="p-4" onSubmit={onSubmitHandle}>
-      <h2 className="text-center mb-2">로그인</h2>
-      <div className="input-group">
+    <form className="flex flex-col gap-4 p-4" onSubmit={onSubmitHandle}>
+      <h2 className="text-center">로그인</h2>
+      <div>
         <label htmlFor="email">아이디</label>
         <input
           id="email"
@@ -61,7 +61,7 @@ export default function SignInForm({ email, expired }: IProps) {
           required
         />
       </div>
-      <div className="input-group">
+      <div>
         <label htmlFor="password">비밀번호</label>
         <input
           ref={passwordRef}
@@ -72,9 +72,11 @@ export default function SignInForm({ email, expired }: IProps) {
           required
         />
       </div>
-      <div className="flex flex-col gap-2">
-        <ButtonWithSpinner type="submit" text="로그인" bgColor="blue" disabled={onSignInMutation.isLoading} />
-        <ButtonWithSpinner type="button" text="회원가입" bgColor="blue" onClick={onSignUpHandle} />
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4">
+          <ButtonWithSpinner type="submit" text="로그인" bgColor="blue" disabled={onSignInMutation.isLoading} />
+          <ButtonWithSpinner type="button" text="회원가입" bgColor="blue" onClick={onSignUpHandle} />
+        </div>
         <div className="flex gap-2">
           <ButtonWithSpinner type="button" text="아이디 찾기" bgColor="gray" onClick={onFindEmailHandle} />
           <ButtonWithSpinner type="button" text="비밀번호 찾기" bgColor="gray" onClick={onFindPasswordHandle} />

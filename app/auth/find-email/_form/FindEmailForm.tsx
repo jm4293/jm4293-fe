@@ -21,13 +21,13 @@ export default function FindEmailForm() {
   };
 
   return (
-    <form className="p-4" onSubmit={onFindEmailHandler}>
-      <h2 className="text-center mb-2">아이디 찾기</h2>
-      <div className="input-group">
+    <form className="flex flex-col gap-4 p-4" onSubmit={onFindEmailHandler}>
+      <h2 className="text-center">아이디 찾기</h2>
+      <div>
         <label htmlFor="name">이름</label>
         <input id="name" value={name} onChange={(e) => setName(e.target.value)} required />
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-4">
         <ButtonWithSpinner type="submit" text="아이디 찾기" bgColor="blue" disabled={onFindEmailMutation.isLoading} />
         <ButtonRouterBack />
       </div>

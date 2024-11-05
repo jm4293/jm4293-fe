@@ -45,24 +45,24 @@ export default function BoardModifyPage({ params }: IProps) {
   }, [isSuccess]);
 
   return (
-    <div className="container">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="mx-auto">게시글 수정</h1>
-      </div>
+    <div className="flex flex-col gap-4">
+      <h1 className="mx-auto">게시글 수정</h1>
 
-      <form className="w-full" onSubmit={onSubmitHandle}>
-        <div className="input-group">
+      <form className="w-full flex flex-col gap-4" onSubmit={onSubmitHandle}>
+        <div>
           <label htmlFor="title">제목</label>
           <input
+            id="title"
             className="w-full"
             value={data.title}
             onChange={(e) => setData((prev) => ({ ...prev, title: e.target.value }))}
             required
           />
         </div>
-        <div className="input-group">
+        <div>
           <label htmlFor="content">내용</label>
           <textarea
+            id="content"
             className="w-full resize-none"
             value={data.content}
             onChange={(e) => setData((prev) => ({ ...prev, content: e.target.value }))}

@@ -34,9 +34,9 @@ export default function SignUpForm() {
   };
 
   return (
-    <form className="p-4" onSubmit={onSignUpHandler}>
-      <h2 className="text-center mb-2">회원가입</h2>
-      <div className="input-group">
+    <form className="flex flex-col gap-4 p-4" onSubmit={onSignUpHandler}>
+      <h2 className="text-center">회원가입</h2>
+      <div>
         <label htmlFor="name">이름</label>
         <input
           id="name"
@@ -45,7 +45,7 @@ export default function SignUpForm() {
           required
         />
       </div>
-      <div className="input-group">
+      <div>
         <label htmlFor="email">아이디</label>
         <input
           id="email"
@@ -54,7 +54,7 @@ export default function SignUpForm() {
           required
         />
       </div>
-      <div className="input-group">
+      <div>
         <label htmlFor="password">비밀번호</label>
         <input
           id="password"
@@ -64,7 +64,7 @@ export default function SignUpForm() {
           required
         />
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-4">
         <ButtonWithSpinner type="submit" text="회원가입" bgColor="blue" disabled={onSignUpMutation.isLoading} />
         <ButtonRouterBack />
       </div>

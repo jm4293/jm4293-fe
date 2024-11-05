@@ -2,8 +2,8 @@ import { cookies } from 'next/headers';
 import Pagination from '@/components/pagination/Pagination';
 import { BOARD_ITEM_COUNT } from '@/commons/constant';
 import { IBoardListRes } from '@/types/interface/board/board.response.interface';
-import BoardListHeader from '@/app/board/_components/board-list-header';
-import BoardList from '@/app/board/_components/board-list-row';
+import BoardListHeader from '@/app/(main)/board/_components/board-list-header';
+import BoardList from '@/app/(main)/board/_components/board-list-row';
 import { FetchConfig } from '@/commons/fetch-config/fetch-config';
 
 interface IProps {
@@ -35,8 +35,8 @@ export default async function BoardListPage({ searchParams }: IProps) {
   }
 
   return (
-    <div className="container">
-      <div className="flex justify-between items-center mt-10 mb-4">
+    <div className="flex flex-col gap-4">
+      <div className="w-full flex justify-between items-center">
         <h1 className="mx-auto">게시판 리스트</h1>
         <BoardListHeader />
       </div>
