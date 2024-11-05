@@ -11,6 +11,7 @@ export default function useBoardMutation() {
     mutationFn: (data) => BoardApi.boardCreate(data),
     onSuccess: (res) => {
       router.replace('/board');
+      router.refresh();
     },
   });
 
@@ -27,6 +28,7 @@ export default function useBoardMutation() {
     mutationFn: ({ seq }) => BoardApi.boardDelete(seq),
     onSuccess: () => {
       router.replace('/board');
+      router.refresh();
       alert('삭제되었습니다.');
     },
   });
