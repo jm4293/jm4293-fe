@@ -3,14 +3,14 @@
 import { useRouter } from 'next/navigation';
 
 interface IProps {
-  board_seq: string;
+  boardSeq: string;
 }
 
-export default function ButtonDetailModify({ board_seq }: IProps) {
+export default function ButtonDetailModify({ boardSeq }: IProps) {
   const router = useRouter();
 
   const onModifyHandle = () => {
-    router.push(`/board/modify/${board_seq}`);
+    router.push(`/board/modify/${boardSeq}`);
   };
 
   return (

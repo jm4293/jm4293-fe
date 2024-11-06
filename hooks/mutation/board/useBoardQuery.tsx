@@ -2,13 +2,13 @@ import { useQuery } from 'react-query';
 import { BoardApi } from '@/api-url/board';
 
 interface IProps {
-  board_seq: number;
+  boardSeq: number;
 }
 
-export default function useBoardQuery({ board_seq }: IProps) {
+export default function useBoardQuery({ boardSeq }: IProps) {
   return useQuery({
-    queryKey: ['board', board_seq],
-    queryFn: () => BoardApi.boardDetail(board_seq),
+    queryKey: ['board', boardSeq],
+    queryFn: () => BoardApi.boardDetail(boardSeq),
     select: (res) => res.data.data,
   });
 }

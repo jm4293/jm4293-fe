@@ -17,15 +17,16 @@ export default function useBoardMutation() {
 
   const onBoardModifyMutation = useMutation<MutationResponse<null>, MutationError, IBoardModifyReq>({
     mutationFn: (data) => BoardApi.boardModify(data),
-    onSuccess: (res, variables) => {
+    onSuccess: async (res, variables) => {
       const { boardSeq } = variables;
+      await queryClient.invalidateQueries(['board', boardSeq]);
       router.push(`/board/detail/${boardSeq}`);
       router.refresh();
     },
   });
 
   const onBoardDeleteMutation = useMutation<MutationResponse<null>, MutationError, IBoardDeleteReq>({
-    mutationFn: ({ seq }) => BoardApi.boardDelete(seq),
+    mutationFn: ({ boardSeq }) => BoardApi.boardDelete({ boardSeq }),
     onSuccess: () => {
       router.replace('/board');
       router.refresh();

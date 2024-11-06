@@ -3,17 +3,17 @@
 import useBoardMutation from '@/hooks/mutation/board/useBoardMutation';
 
 interface IProps {
-  board_seq: string;
+  boardSeq: string;
 }
 
-export default function ButtonDetailDelete({ board_seq }: IProps) {
+export default function ButtonDetailDelete({ boardSeq }: IProps) {
   const { onBoardDeleteMutation } = useBoardMutation();
 
   const onDeleteHandle = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
 
     if (confirm('정말 삭제하시겠습니까?')) {
-      onBoardDeleteMutation.mutate({ seq: Number(board_seq) });
+      onBoardDeleteMutation.mutate({ boardSeq: Number(boardSeq) });
     }
   };
 

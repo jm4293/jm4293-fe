@@ -1,5 +1,5 @@
-import { AxiosConfig } from '../../commons/axios-config';
 import { IBoardCommentCreateReq } from '@/types/interface';
+import { AxiosConfig } from '@/commons/axios-config';
 
 export class BoardCommentApi extends AxiosConfig {
   static _baseUrl = `${process.env.NEXT_PUBLIC_GLOBAL_PREFIX}/board-comment`;

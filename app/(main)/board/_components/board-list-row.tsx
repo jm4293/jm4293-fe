@@ -11,10 +11,10 @@ interface IProps {
 export default function BoardList({ board }: IProps) {
   const router = useRouter();
 
-  const onRowCLickHandler = (e: React.MouseEvent<HTMLLIElement>, board_seq: number) => {
+  const onRowCLickHandler = (e: React.MouseEvent<HTMLLIElement>, boardSeq: number) => {
     e.preventDefault();
 
-    router.push(`/board/detail/${board_seq}`);
+    router.push(`/board/detail/${boardSeq}`);
   };
 
   return (

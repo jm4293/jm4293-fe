@@ -5,16 +5,16 @@ import useBoardCommentQuery from '@/hooks/mutation/board-comment/useBoardComment
 import { IBoardCommentsRes } from '@/types/interface/board-comment';
 import { useState } from 'react';
 import useBoardCommentMutation from '@/hooks/mutation/board-comment/useBoardCommentMutation';
-import ButtonCommentDelete from '@/app/(main)/board/detail/[board_seq]/comment/_components/ButtonCommentDelete';
+import ButtonCommentDelete from '@/app/(main)/board/detail/[boardSeq]/comment/_components/ButtonCommentDelete';
 import ButtonWithSpinner from '@/components/button/ButtonWithSpinner';
 
 interface IProps {
-  board_seq: string;
+  boardSeq: string;
   email: string;
 }
 
-export default function BoardComment({ board_seq, email }: IProps) {
-  const onBoardCommentQuery = useBoardCommentQuery({ board_seq: Number(board_seq) });
+export default function BoardComment({ boardSeq, email }: IProps) {
+  const onBoardCommentQuery = useBoardCommentQuery({ boardSeq: Number(boardSeq) });
   const { onBoardCommentCreateMutation } = useBoardCommentMutation();
 
   const [content, setContent] = useState('');
@@ -24,7 +24,7 @@ export default function BoardComment({ board_seq, email }: IProps) {
       return alert('댓글 내용을 입력해주세요.');
     }
 
-    onBoardCommentCreateMutation.mutate({ board_seq: Number(board_seq), content });
+    onBoardCommentCreateMutation.mutate({ boardSeq: Number(boardSeq), content });
     setContent('');
   };
 
@@ -42,9 +42,9 @@ export default function BoardComment({ board_seq, email }: IProps) {
               <p>{comment.content}</p>
             </div>
             <div className="flex items-center gap-4">
-              <p>{comment.name}</p>
+              <p className="whitespace-nowrap">{comment.name}</p>
               <p className="whitespace-nowrap">{dayjs(comment.createdAt).format('YYYY-MM-DD hh:mm')}</p>
-              {email === comment.email && <ButtonCommentDelete comment_seq={comment.seq} board_seq={board_seq} />}
+              {email === comment.email && <ButtonCommentDelete boardCommentSeq={comment.seq} boardSeq={boardSeq} />}
             </div>
           </div>
         ))

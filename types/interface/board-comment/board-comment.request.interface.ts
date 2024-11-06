@@ -1,9 +1,9 @@
 export interface IBoardCommentCreateReq {
   content: string;
-  board_seq: number;
+  boardSeq: number;
 }
 
 export interface IBoardCommentDeleteReq {
-  board_seq: number;
-  comment_seq: number;
+  boardSeq: number;
+  boardCommentSeq: number;
 }

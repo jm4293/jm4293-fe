@@ -8,16 +8,18 @@ export default function useBoardCommentMutation() {
   const onBoardCommentCreateMutation = useMutation<MutationResponse<null>, MutationError, IBoardCommentCreateReq>({
     mutationFn: (data) => BoardCommentApi.boardCommentCreate(data),
     onSuccess: async (_, variables) => {
-      const { board_seq } = variables;
+      const { boardSeq } = variables;
 
-      await queryClient.invalidateQueries(['boardCommentList', board_seq]);
+      await queryClient.invalidateQueries(['boardCommentList', boardSeq]);
     },
   });
 
   const onBoardCommentDeleteMutation = useMutation<MutationResponse<null>, MutationError, IBoardCommentDeleteReq>({
-    mutationFn: ({ board_seq, comment_seq }: IBoardCommentDeleteReq) => BoardCommentApi.boardCommentDelete(comment_seq),
+    mutationFn: ({ boardCommentSeq }: IBoardCommentDeleteReq) => BoardCommentApi.boardCommentDelete(boardCommentSeq),
     onSuccess: async (_, variables) => {
-      await queryClient.invalidateQueries(['boardCommentList', variables.board_seq]);
+      const { boardSeq } = variables;
+
+      await queryClient.invalidateQueries(['boardCommentList', boardSeq]);
     },
   });
 

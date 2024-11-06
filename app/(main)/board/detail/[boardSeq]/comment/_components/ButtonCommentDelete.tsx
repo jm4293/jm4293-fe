@@ -3,17 +3,17 @@
 import useBoardCommentMutation from '@/hooks/mutation/board-comment/useBoardCommentMutation';
 
 interface IProps {
-  board_seq: string;
-  comment_seq: string;
+  boardSeq: string;
+  boardCommentSeq: string;
 }
 
-export default function ButtonCommentDelete({ board_seq, comment_seq }: IProps) {
+export default function ButtonCommentDelete({ boardSeq, boardCommentSeq }: IProps) {
   const { onBoardCommentDeleteMutation } = useBoardCommentMutation();
 
   const onDeleteHandle = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
 
-    onBoardCommentDeleteMutation.mutate({ board_seq: Number(board_seq), comment_seq: Number(comment_seq) });
+    onBoardCommentDeleteMutation.mutate({ boardSeq: Number(boardSeq), boardCommentSeq: Number(boardCommentSeq) });
   };
 
   return (

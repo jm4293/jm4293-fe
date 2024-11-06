@@ -10,5 +10,5 @@ export interface IBoardModifyReq {
 }
 
 export interface IBoardDeleteReq {
-  seq: number;
+  boardSeq: number;
 }

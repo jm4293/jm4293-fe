@@ -1,5 +1,5 @@
-import { AxiosConfig } from '../../commons/axios-config';
 import { IBoardCreateReq, IBoardDeleteReq, IBoardModifyReq } from '@/types/interface';
+import { AxiosConfig } from '@/commons/axios-config';
 
 export class BoardApi extends AxiosConfig {
   static _baseUrl = `${process.env.NEXT_PUBLIC_GLOBAL_PREFIX}/board`;
@@ -16,7 +16,7 @@ export class BoardApi extends AxiosConfig {
     return await AxiosConfig.patch({ url: `${this._baseUrl}/board-modify`, data });
   }
 
-  static async boardDelete(params: number) {
+  static async boardDelete(params: IBoardDeleteReq) {
     return await AxiosConfig.delete({ url: `${this._baseUrl}/board-delete/${params}` });
   }
 }

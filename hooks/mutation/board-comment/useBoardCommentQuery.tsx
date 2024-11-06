@@ -2,14 +2,14 @@ import { useQuery } from 'react-query';
 import { BoardCommentApi } from '@/api-url/board-comment';
 
 interface IProps {
-  board_seq: number;
+  boardSeq: number;
 }
 
-export default function useBoardCommentQuery({ board_seq }: IProps) {
+export default function useBoardCommentQuery({ boardSeq }: IProps) {
   return useQuery({
-    queryKey: ['boardCommentList', board_seq],
-    queryFn: () => BoardCommentApi.boardCommentList(board_seq),
-    // enabled: !!board_seq,
+    queryKey: ['boardCommentList', boardSeq],
+    queryFn: () => BoardCommentApi.boardCommentList(boardSeq),
+    // enabled: !!boardSeq,
     select: (res) => res?.data.data || [],
   });
 }

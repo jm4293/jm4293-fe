@@ -1,20 +1,20 @@
 import { cookies } from 'next/headers';
 import ButtonRouterBack from '@/components/button/ButtonRouterBack';
-import ButtonDetailModify from '@/app/(main)/board/detail/[board_seq]/_components/ButtonDetailModify';
-import BoardComment from '@/app/(main)/board/detail/[board_seq]/comment/board-comment';
-import ButtonDetailDelete from '@/app/(main)/board/detail/[board_seq]/_components/ButtonDetailDelete';
+import ButtonDetailModify from '@/app/(main)/board/detail/[boardSeq]/_components/ButtonDetailModify';
+import BoardComment from '@/app/(main)/board/detail/[boardSeq]/comment/board-comment';
+import ButtonDetailDelete from '@/app/(main)/board/detail/[boardSeq]/_components/ButtonDetailDelete';
 import { FetchConfig } from '@/commons/fetch-config/fetch-config';
 import { IBoardDetailRes } from '@/types/interface';
 import { decodeToken } from '@/utils/verify';
 
 interface IProps {
   params: {
-    board_seq: string;
+    boardSeq: string;
   };
 }
 
 export default async function BoardDetailPage({ params }: IProps) {
-  const { board_seq } = params;
+  const { boardSeq } = params;
 
   const accessToken = cookies().get('accessToken');
   const decodeAccessToken = decodeToken(accessToken?.value || '');
@@ -23,7 +23,7 @@ export default async function BoardDetailPage({ params }: IProps) {
 
   try {
     const response = await FetchConfig.get<IBoardDetailRes>({
-      url: `board/board-detail/${board_seq}`,
+      url: `board/board-detail/${boardSeq}`,
       headers: { Cookie: `accessToken=${accessToken?.value}` },
     });
 
@@ -59,15 +59,15 @@ export default async function BoardDetailPage({ params }: IProps) {
 
         <div className="flex gap-4">
           <ButtonRouterBack url="/board" />
-          {boardDetail.email === decodeAccessToken?.email && <ButtonDetailModify board_seq={board_seq} />}
-          {boardDetail.email === decodeAccessToken?.email && <ButtonDetailDelete board_seq={board_seq} />}
+          {boardDetail.email === decodeAccessToken?.email && <ButtonDetailModify boardSeq={boardSeq} />}
+          {boardDetail.email === decodeAccessToken?.email && <ButtonDetailDelete boardSeq={boardSeq} />}
         </div>
       </div>
 
       <div>
         <div className="flex flex-col">
           <h1 className="mx-auto">댓글</h1>
-          <BoardComment board_seq={board_seq} email={String(decodeAccessToken?.email)} />
+          <BoardComment boardSeq={boardSeq} email={String(decodeAccessToken?.email)} />
         </div>
       </div>
     </div>

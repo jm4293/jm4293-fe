@@ -72,14 +72,14 @@ export default function Pagination({ totalCount, currentPage }: IProps) {
       <button
         className="text-black disabled:text-gray-400"
         onClick={handleNextPage}
-        disabled={currentPage === totalPages}>
+        disabled={currentPage === totalPages || totalPages === 0}>
         &gt;
       </button>
 
       <button
         className="text-black disabled:text-gray-400"
         onClick={goToLastPage}
-        disabled={currentPage === totalPages}>
+        disabled={currentPage === totalPages || totalPages === 0}>
         &raquo;
       </button>
     </div>

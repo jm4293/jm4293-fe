@@ -9,14 +9,14 @@ import useBoardMutation from '@/hooks/mutation/board/useBoardMutation';
 
 interface IProps {
   params: {
-    board_seq: string;
+    boardSeq: string;
   };
 }
 
 export default function BoardModifyPage({ params }: IProps) {
-  const { board_seq } = params;
+  const { boardSeq } = params;
 
-  const { data: board, isSuccess } = useBoardQuery({ board_seq: Number(board_seq) });
+  const { data: board, isSuccess } = useBoardQuery({ boardSeq: Number(boardSeq) });
   const { onBoardModifyMutation } = useBoardMutation();
 
   const [data, setData] = useState<IBoardCreateReq>({
@@ -35,7 +35,7 @@ export default function BoardModifyPage({ params }: IProps) {
       return alert('내용을 입력해주세요.');
     }
 
-    onBoardModifyMutation.mutate({ boardSeq: Number(board_seq), ...data });
+    onBoardModifyMutation.mutate({ boardSeq: Number(boardSeq), ...data });
   };
 
   useEffect(() => {
