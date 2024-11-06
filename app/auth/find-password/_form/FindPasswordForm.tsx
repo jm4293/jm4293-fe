@@ -53,7 +53,7 @@ export default function FindPasswordForm() {
 
           <div>
             <label htmlFor="password">비밀번호</label>
-            <input id="password" value={second} onChange={(e) => setSecond(e.target.value)} required />
+            <input id="password" type="password" value={second} onChange={(e) => setSecond(e.target.value)} required />
           </div>
           <div className="flex flex-col gap-4">
             <ButtonWithSpinner

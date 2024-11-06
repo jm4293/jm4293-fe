@@ -14,6 +14,7 @@ interface IProps {
 export default function SignInForm({ email, expired }: IProps) {
   const { onSignInMutation } = useAuthMutation();
   const router = useRouter();
+  const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
   const [signInData, setSignInData] = useState<IAuthSignInReq>({ email: '', password: '' });
@@ -37,6 +38,10 @@ export default function SignInForm({ email, expired }: IProps) {
   };
 
   useEffect(() => {
+    emailRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
     if (!!email) {
       setSignInData((prev) => ({ ...prev, email }));
       passwordRef.current?.focus();
@@ -55,6 +60,7 @@ export default function SignInForm({ email, expired }: IProps) {
       <div>
         <label htmlFor="email">아이디</label>
         <input
+          ref={emailRef}
           id="email"
           value={signInData.email}
           onChange={(e) => setSignInData((prev) => ({ ...prev, email: e.target.value }))}

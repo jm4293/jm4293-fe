@@ -35,7 +35,7 @@ export default function BoardModifyPage({ params }: IProps) {
       return alert('내용을 입력해주세요.');
     }
 
-    onBoardModifyMutation.mutate({ seq: Number(board_seq), ...data });
+    onBoardModifyMutation.mutate({ boardSeq: Number(board_seq), ...data });
   };
 
   useEffect(() => {

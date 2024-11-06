@@ -18,8 +18,8 @@ export default function useBoardMutation() {
   const onBoardModifyMutation = useMutation<MutationResponse<null>, MutationError, IBoardModifyReq>({
     mutationFn: (data) => BoardApi.boardModify(data),
     onSuccess: (res, variables) => {
-      const { seq } = variables;
-      router.push(`/board/detail/${seq}`);
+      const { boardSeq } = variables;
+      router.push(`/board/detail/${boardSeq}`);
       router.refresh();
     },
   });

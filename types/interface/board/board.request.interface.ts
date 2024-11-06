@@ -4,7 +4,7 @@ export interface IBoardCreateReq {
 }
 
 export interface IBoardModifyReq {
-  seq: number;
+  boardSeq: number;
   title: string;
   content: string;
 }
