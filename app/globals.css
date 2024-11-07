@@ -72,9 +72,9 @@ li:hover {
   width: 100vw;
   min-width: 320px;
   max-width: 1024px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /*display: flex;*/
+  /*justify-content: center;*/
+  /*align-items: center;*/
   position: absolute;
   margin: auto;
   top: 50%;
