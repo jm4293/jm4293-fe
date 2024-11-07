@@ -7,6 +7,7 @@ import { useState } from 'react';
 import useBoardCommentMutation from '@/hooks/mutation/board-comment/useBoardCommentMutation';
 import ButtonCommentDelete from '@/app/(main)/board/detail/[boardSeq]/comment/_components/ButtonCommentDelete';
 import ButtonWithSpinner from '@/components/button/ButtonWithSpinner';
+import koLocaleDayjs from '@/utils/dayjs/koLocaleDayjs';
 
 interface IProps {
   boardSeq: string;
@@ -43,7 +44,7 @@ export default function BoardComment({ boardSeq, email }: IProps) {
             </div>
             <div className="flex items-center gap-4">
               <p className="whitespace-nowrap">{comment.name}</p>
-              <p className="whitespace-nowrap">{dayjs(comment.createdAt).format('YYYY-MM-DD hh:mm')}</p>
+              <p className="whitespace-nowrap">{koLocaleDayjs(comment.createdAt)}</p>
               {email === comment.email && <ButtonCommentDelete boardCommentSeq={comment.seq} boardSeq={boardSeq} />}
             </div>
           </div>

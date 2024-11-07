@@ -41,8 +41,8 @@ button {
 input,
 textarea {
   width: 100%;
-  border: 1px solid #CCC; /* border 색상과 두께 */
-  border-radius: 8px; /* 모서리 둥글게 */
+  border-radius: 4px;
+  border: 1px solid var(--black);
   padding: 8px;
 }
 

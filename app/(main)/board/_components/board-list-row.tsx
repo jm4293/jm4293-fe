@@ -1,8 +1,8 @@
 'use client';
 
-import koLocaleDayjs from '@/utils/dayjs/koLocaleDayjs';
 import { IBoardListRes } from '@/types/interface/board/board.response.interface';
 import { useRouter } from 'next/navigation';
+import koLocaleDayjs from '@/utils/dayjs/koLocaleDayjs';
 
 interface IProps {
   board: IBoardListRes;
@@ -25,7 +25,7 @@ export default function BoardList({ board }: IProps) {
         </p>
         <div className="flex gap-2">
           <p className="whitespace-nowrap">{board.writerName}</p>
-          <p className="whitespace-nowrap">{koLocaleDayjs(board.createdAt).format('YYYY-MM-DD')}</p>
+          <p className="whitespace-nowrap">{koLocaleDayjs(board.createdAt)}</p>
         </div>
       </div>
     </li>
