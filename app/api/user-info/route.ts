@@ -8,6 +8,6 @@ export async function GET() {
   const decodeAccessToken = decodeToken(accessToken);
 
   return NextResponse.json({
-    data: { ...decodeAccessToken },
+    data: { accessToken, ...decodeAccessToken },
   });
 }
