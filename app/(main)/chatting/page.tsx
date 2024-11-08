@@ -1,9 +1,11 @@
 'use client';
 
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import SocketService from '@/app/(main)/chatting/_socketInit/socketService';
 
 export default function ChattingPage() {
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
   const socketService = SocketService.getInstance();
 
   const [messages, setMessages] = useState<string[]>([]);
@@ -31,6 +33,10 @@ export default function ChattingPage() {
     };
   }, []);
 
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
   return (
     <>
       <div>
@@ -38,11 +44,14 @@ export default function ChattingPage() {
           className="bg-white"
           style={{
             height: '300px',
+            maxHeight: '450px',
+            overflowY: 'auto',
             border: '1px solid black',
           }}>
           {messages.map((msg, index) => (
             <div key={index}>{msg}</div>
           ))}
+          <div ref={messagesEndRef} />
         </div>
       </div>
       <form onSubmit={(e) => onHandleSendMessage(e)}>
