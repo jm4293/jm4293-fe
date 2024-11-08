@@ -14,11 +14,19 @@ export default function ChattingPage() {
   const onHandleSendMessage = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (message.trim()) {
-      setMessages((prev) => [...prev, `나: ${message}`]);
-      socketService.sendMessage(message);
-      setMessage('');
+    const trimMessage = message.trim();
+
+    if (trimMessage.length > 200) {
+      return alert('200자 이하로 입력해주세요.');
     }
+
+    if (trimMessage.length === 0) {
+      return alert('메시지를 입력해주세요.');
+    }
+
+    setMessages((prev) => [...prev, `나: ${trimMessage}`]);
+    socketService.sendMessage(trimMessage);
+    setMessage('');
   };
 
   useEffect(() => {
