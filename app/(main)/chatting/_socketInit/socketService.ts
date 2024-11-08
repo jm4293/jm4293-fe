@@ -50,4 +50,11 @@ export default class SocketService {
       console.log('Socket disconnected');
     }
   }
+
+  removeInstance() {
+    if (SocketService._instance) {
+      SocketService._instance.disconnect();
+      SocketService._instance = null;
+    }
+  }
 }
