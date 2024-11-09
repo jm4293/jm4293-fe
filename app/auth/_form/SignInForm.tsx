@@ -1,6 +1,7 @@
 'use client';
 
-import { FormEvent, useEffect, useRef, useState } from 'react';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import useAuthMutation from '@/hooks/mutation/auth/useAuthMutation';
 import { IAuthSignInReq } from '@/types/interface/auth';
 import ButtonWithSpinner from '@/components/button/ButtonWithSpinner';
@@ -14,15 +15,16 @@ interface IProps {
 export default function SignInForm({ email, expired }: IProps) {
   const { onSignInMutation } = useAuthMutation();
   const router = useRouter();
-  const emailRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
 
-  const [signInData, setSignInData] = useState<IAuthSignInReq>({ email: '', password: '' });
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { isSubmitting, errors },
+  } = useForm<IAuthSignInReq>({ defaultValues: { email: email || '', password: '' } });
 
-  const onSubmitHandle = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    onSignInMutation.mutate(signInData);
+  const onSubmit = async (data: IAuthSignInReq) => {
+    onSignInMutation.mutate(data);
   };
 
   const onSignUpHandle = () => {
@@ -38,49 +40,35 @@ export default function SignInForm({ email, expired }: IProps) {
   };
 
   useEffect(() => {
-    emailRef.current?.focus();
-  }, []);
-
-  useEffect(() => {
-    if (!!email) {
-      setSignInData((prev) => ({ ...prev, email }));
-      passwordRef.current?.focus();
+    if (email) {
+      setValue('email', email);
     }
-  }, [email]);
-
-  // useEffect(() => {
-  //   if (expired) {
-  //     alert('세션이 만료되었습니다. 다시 로그인해주세요.');
-  //   }
-  // }, []);
+  }, [email, setValue]);
 
   return (
-    <form className="flex flex-col gap-4 p-4" onSubmit={onSubmitHandle}>
+    <form className="flex flex-col gap-4 p-4" onSubmit={handleSubmit(onSubmit)}>
       <h2 className="text-center">로그인</h2>
+
       <div>
         <label htmlFor="email">아이디</label>
-        <input
-          ref={emailRef}
-          id="email"
-          value={signInData.email}
-          onChange={(e) => setSignInData((prev) => ({ ...prev, email: e.target.value }))}
-          required
-        />
+        <input id="email" {...register('email', { required: '아이디를 입력하세요.' })} autoFocus />
+        {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
       </div>
+
       <div>
         <label htmlFor="password">비밀번호</label>
-        <input
-          ref={passwordRef}
-          id="password"
-          type="password"
-          value={signInData.password}
-          onChange={(e) => setSignInData((prev) => ({ ...prev, password: e.target.value }))}
-          required
-        />
+        <input id="password" type="password" {...register('password', { required: '비밀번호를 입력하세요.' })} />
+        {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
       </div>
+
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-4">
-          <ButtonWithSpinner type="submit" text="로그인" bgColor="blue" disabled={onSignInMutation.isLoading} />
+          <ButtonWithSpinner
+            type="submit"
+            text="로그인"
+            bgColor="blue"
+            disabled={isSubmitting || onSignInMutation.isLoading}
+          />
           <ButtonWithSpinner type="button" text="회원가입" bgColor="blue" onClick={onSignUpHandle} />
         </div>
         <div className="flex gap-2">

@@ -1,46 +1,43 @@
 'use client';
 
+import { useForm } from 'react-hook-form';
 import ButtonWithSpinner from '@/components/button/ButtonWithSpinner';
 import useAuthMutation from '@/hooks/mutation/auth/useAuthMutation';
-import { useRouter } from 'next/navigation';
-import { FormEvent, useEffect, useState } from 'react';
-import { IAuthVerifyEmailReq } from '@/types/interface/auth';
 import ButtonRouterBack from '@/components/button/ButtonRouterBack';
+import { useEffect, useState } from 'react';
+import { IAuthChangePasswordReq, IAuthVerifyEmailReq } from '@/types/interface';
 
 export default function FindPasswordForm() {
   const { onVerifyEmailMutation, onChangePasswordMutation } = useAuthMutation();
-  const router = useRouter();
 
-  const [isVerified, setIsVerified] = useState<boolean>(false);
-  const [first, setFirst] = useState<IAuthVerifyEmailReq>({ name: '', email: '' });
-  const [second, setSecond] = useState<string>('');
+  const [isVerified, setIsVerified] = useState(false);
 
-  const onVerifyEmailHandler = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const {
+    register: registerVerify,
+    handleSubmit: handleVerifySubmit,
+    formState: { errors: verifyErrors, isSubmitting: isVerifying },
+    getValues,
+  } = useForm<IAuthVerifyEmailReq>({ defaultValues: { email: '', name: '' } });
 
-    if (!first.name) {
-      return alert('이름을 입력해주세요');
-    }
+  const {
+    register: registerPassword,
+    handleSubmit: handlePasswordSubmit,
+    formState: { errors: passwordErrors, isSubmitting: isChangingPassword },
+    getValues: getPasswordValue,
+    setValue: setPasswordValue,
+  } = useForm<IAuthChangePasswordReq>({ defaultValues: { email: '', password: '' } });
 
-    if (!first.email) {
-      return alert('아이디를 입력해주세요');
-    }
-
-    onVerifyEmailMutation.mutate(first);
+  const onVerifyEmailHandler = async (data: IAuthVerifyEmailReq) => {
+    onVerifyEmailMutation.mutate(data);
   };
 
-  const onFindPasswordHandler = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (!second) {
-      return alert('비밀번호를 입력해주세요');
-    }
-
-    onChangePasswordMutation.mutate({ email: first.email, password: second });
+  const onChangePasswordHandler = async (data: IAuthChangePasswordReq) => {
+    onChangePasswordMutation.mutate({ email: data.email, password: data.password });
   };
 
   useEffect(() => {
     if (onVerifyEmailMutation.isSuccess) {
+      setPasswordValue('email', getValues('email'));
       setIsVerified(true);
     }
   }, [onVerifyEmailMutation.isSuccess]);
@@ -48,51 +45,61 @@ export default function FindPasswordForm() {
   return (
     <>
       {isVerified ? (
-        <form className="flex flex-col gap-4 p-4" onSubmit={onFindPasswordHandler}>
+        <form className="flex flex-col gap-4 p-4" onSubmit={handlePasswordSubmit(onChangePasswordHandler)}>
           <h2 className="text-center">비밀번호 변경</h2>
-
           <div>
             <label htmlFor="password">비밀번호</label>
-            <input id="password" type="password" value={second} onChange={(e) => setSecond(e.target.value)} required />
+            <input
+              id="password"
+              type="text"
+              {...registerPassword('password', {
+                required: '비밀번호를 입력해주세요.',
+                // minLength: {
+                //   value: 6,
+                //   message: '비밀번호는 최소 6자 이상이어야 합니다.',
+                // },
+              })}
+            />
+            {passwordErrors.password && <p className="text-red-500 text-sm">{passwordErrors.password.message}</p>}
           </div>
           <div className="flex flex-col gap-4">
             <ButtonWithSpinner
               type="submit"
               text="비밀번호 변경"
               bgColor="blue"
-              disabled={onChangePasswordMutation.isLoading}
+              disabled={isChangingPassword || onChangePasswordMutation.isLoading}
             />
             <ButtonRouterBack />
           </div>
         </form>
       ) : (
-        <form className="flex flex-col gap-4 p-4" onSubmit={onVerifyEmailHandler}>
+        <form className="flex flex-col gap-4 p-4" onSubmit={handleVerifySubmit(onVerifyEmailHandler)}>
           <h2 className="text-center">아이디 인증</h2>
-
           <div>
             <label htmlFor="name">이름</label>
-            <input
-              id="name"
-              value={first.name}
-              onChange={(e) => setFirst((prev) => ({ ...prev, name: e.target.value }))}
-              required
-            />
+            <input id="name" {...registerVerify('name', { required: '이름을 입력해주세요.' })} />
+            {verifyErrors.name && <p className="text-red-500 text-sm">{verifyErrors.name.message}</p>}
           </div>
           <div>
             <label htmlFor="email">아이디</label>
             <input
               id="email"
-              value={first.email}
-              onChange={(e) => setFirst((prev) => ({ ...prev, email: e.target.value }))}
-              required
+              {...registerVerify('email', {
+                required: '아이디를 입력해주세요.',
+                // pattern: {
+                //   value: /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/,
+                //   message: '유효한 이메일 주소를 입력해주세요.',
+                // },
+              })}
             />
+            {verifyErrors.email && <p className="text-red-500 text-sm">{verifyErrors.email.message}</p>}
           </div>
           <div className="flex flex-col gap-4">
             <ButtonWithSpinner
               type="submit"
               text="아이디 인증"
               bgColor="blue"
-              disabled={onVerifyEmailMutation.isLoading}
+              disabled={isVerifying || onVerifyEmailMutation.isLoading}
             />
             <ButtonRouterBack />
           </div>
