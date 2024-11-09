@@ -8,13 +8,13 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build-rm": "sudo rm -rf .next",
+    "node-rm": "sudo rm -rf node_modules",
     "start": "next start",
+    "start:prod": "rm -rf .next && rm -rf node_modules && npm install && npm run build && pm2 start 'npm run start' --name next.js-app",
     "lint": "next lint"
   },
   "dependencies": {
-    "@emotion/react": "^11.13.3",
-    "@emotion/styled": "^11.13.0",
-    "@mui/material": "^6.1.5",
     "axios": "^1.7.7",
     "dayjs": "^1.11.13",
     "jose": "^5.9.6",

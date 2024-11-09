@@ -69,7 +69,7 @@ export class FetchConfig {
     };
 
     console.log('fetch url', fullUrl.toString());
-    console.log('fetch headers', headers);
+    // console.log('fetch headers', headers);
 
     try {
       const response = await fetch(fullUrl.toString(), options);
