@@ -17,6 +17,6 @@ export class BoardApi extends AxiosConfig {
   }
 
   static async boardDelete(params: IBoardDeleteReq) {
-    return await AxiosConfig.delete({ url: `${this._baseUrl}/board-delete/${params}` });
+    return await AxiosConfig.delete({ url: `${this._baseUrl}/board-delete/${params.boardSeq}` });
   }
 }
