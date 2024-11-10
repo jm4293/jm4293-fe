@@ -1,4 +1,5 @@
 import io, { Socket } from 'socket.io-client';
+import { ChattingMessageListRes } from '@/types/interface';
 
 export default class SocketService {
   private static _instance: SocketService | null = null;
@@ -30,7 +31,7 @@ export default class SocketService {
     }
   }
 
-  onMessage(callback: (message: string) => void) {
+  onMessage(callback: (data: ChattingMessageListRes) => void) {
     if (this._socket) {
       this._socket.on('message', callback);
     }

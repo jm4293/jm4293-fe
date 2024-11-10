@@ -2,14 +2,15 @@
 
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import SocketService from '@/app/(main)/chatting/_socketInit/socketService';
+import { ChattingMessageListRes } from '@/types/interface';
 
 export default function ChattingPage() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const socketService = SocketService.getInstance();
 
-  const [messages, setMessages] = useState<string[]>([]);
-  const [message, setMessage] = useState('');
+  const [messageList, setMessageList] = useState<ChattingMessageListRes[]>([]);
+  const [message, setMessage] = useState<string>('');
 
   const onHandleSendMessage = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,7 +25,7 @@ export default function ChattingPage() {
       return alert('메시지를 입력해주세요.');
     }
 
-    setMessages((prev) => [...prev, `나: ${trimMessage}`]);
+    setMessageList((prev) => [...prev, { message: trimMessage, name: '나', isMine: true }]);
     socketService.sendMessage(trimMessage);
     setMessage('');
   };
@@ -32,8 +33,8 @@ export default function ChattingPage() {
   useEffect(() => {
     socketService.connect();
 
-    socketService.onMessage((newMessage) => {
-      setMessages((prev) => [...prev, `상대방: ${newMessage}`]);
+    socketService.onMessage(({ message, name }: { message: string; name: string }) => {
+      setMessageList((prev) => [...prev, { message, name, isMine: false }]);
     });
 
     return () => {
@@ -43,7 +44,7 @@ export default function ChattingPage() {
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  }, [messageList]);
 
   return (
     <>
@@ -56,8 +57,10 @@ export default function ChattingPage() {
             overflowY: 'auto',
             border: '1px solid black',
           }}>
-          {messages.map((msg, index) => (
-            <div key={index}>{msg}</div>
+          {messageList.map((msg, index) => (
+            <div
+              key={index}
+              className={`${msg.isMine ? 'text-right' : 'text-left'} `}>{`${msg.name}: ${msg.message}`}</div>
           ))}
           <div ref={messagesEndRef} />
         </div>
