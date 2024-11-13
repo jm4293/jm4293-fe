@@ -5,14 +5,14 @@ export async function verifyToken(token: string) {
     const secretKey = new TextEncoder().encode(process.env.NEXT_PUBLIC_JWT_SECRET_KEY);
 
     if (!secretKey) {
-      console.error('JWT_SECRET_KEY is not defined.');
+      console.error('JWT_SECRET_KEY가 업습니다.');
       return null;
     }
 
     const { payload } = await jwtVerify(token, secretKey);
     return payload;
-  } catch (error) {
-    console.error('JWT verification error:', error);
+  } catch (err) {
+    console.error('토큰이 만료되었습니다.', err);
     return null;
   }
 }
@@ -20,8 +20,8 @@ export async function verifyToken(token: string) {
 export function decodeToken(token: string) {
   try {
     return decodeJwt(token);
-  } catch (error) {
-    console.error('JWT decoding error:', error);
+  } catch (err) {
+    console.error('JWT 디코딩 실패:', err);
     return null;
   }
 }

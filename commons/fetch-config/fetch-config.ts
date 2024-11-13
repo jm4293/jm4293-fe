@@ -44,9 +44,17 @@ interface IPatchRequest {
 
 export class FetchConfig {
   private static _baseURL = `${process.env.NEXT_PUBLIC_API_URL}:${process.env.NEXT_PUBLIC_API_PORT}/${process.env.NEXT_PUBLIC_GLOBAL_PREFIX}`;
+  private static _headers: Record<string, string> = { 'Content-Type': 'application/json' };
 
-  private static async _request({ method, url, params, queryString, body, headers }: IRequest) {
-    let fullUrlPath = `${this._baseURL}/${url}`;
+  private static async _request<T>({
+    method,
+    url,
+    params,
+    queryString,
+    body,
+    headers,
+  }: IRequest): Promise<ResponseConfig<T>> {
+    let fullUrlPath = `${this._baseURL}${url}`;
 
     if (params) {
       fullUrlPath += `/${params}`;
@@ -61,55 +69,40 @@ export class FetchConfig {
     const options: RequestInit = {
       method,
       headers: {
-        'Content-Type': 'application/json',
+        ...this._headers,
         ...headers,
       },
       body: body ? JSON.stringify(body) : undefined,
       credentials: 'include',
     };
 
-    console.log('fetch url', fullUrl.toString());
-    // console.log('fetch headers', headers);
-
     try {
       const response = await fetch(fullUrl.toString(), options);
 
       return await response.json();
-    } catch (error: unknown) {
-      // switch (error.message) {
-      //   case '400':
-      //     break;
-      //   case '401':
-      //     break;
-      //   case '404':
-      //     break;
-      //   case '500':
-      //     break;
-      //   default:
-      //     break;
-      // }
-
+    } catch (error) {
+      console.error('fetch 호출 중 에러 발생', error);
       throw error;
     }
   }
 
   static async get<T>({ url, params, queryString, headers = {} }: IGetRequest): Promise<ResponseConfig<T>> {
-    return await this._request({ method: 'GET', url, params, queryString, headers });
+    return await this._request<T>({ method: 'GET', url, params, queryString, headers });
   }
 
   static async post<T>({ url, body, headers = {} }: IPostRequest): Promise<ResponseConfig<T>> {
-    return await this._request({ method: 'POST', url, body, headers });
+    return await this._request<T>({ method: 'POST', url, body, headers });
   }
 
   static async put<T>({ url, params, body, headers = {} }: IPutRequest): Promise<ResponseConfig<T>> {
-    return await this._request({ method: 'PUT', url, params, body, headers });
+    return await this._request<T>({ method: 'PUT', url, params, body, headers });
   }
 
   static async delete<T>({ url, params, headers = {} }: IDeleteRequest): Promise<ResponseConfig<T>> {
-    return await this._request({ method: 'DELETE', url, params, headers });
+    return await this._request<T>({ method: 'DELETE', url, params, headers });
   }
 
   static async patch<T>({ url, params, body, headers = {} }: IPatchRequest): Promise<ResponseConfig<T>> {
-    return await this._request({ method: 'PATCH', url, params, body, headers });
+    return await this._request<T>({ method: 'PATCH', url, params, body, headers });
   }
 }

@@ -4,7 +4,7 @@ import { FormEvent, useEffect, useState } from 'react';
 import { IBoardCreateReq } from '@/types/interface/board';
 import ButtonWithSpinner from '@/components/button/ButtonWithSpinner';
 import ButtonRouterBack from '@/components/button/ButtonRouterBack';
-import useBoardQuery from '@/hooks/mutation/board/useBoardQuery';
+import useBoardQuery from '@/hooks/query/board/useBoardQuery';
 import useBoardMutation from '@/hooks/mutation/board/useBoardMutation';
 
 interface IProps {

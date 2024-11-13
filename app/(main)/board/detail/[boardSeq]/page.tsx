@@ -23,8 +23,7 @@ export default async function BoardDetailPage({ params }: IProps) {
 
   try {
     const response = await FetchConfig.get<IBoardDetailRes>({
-      url: `board/board-detail/${boardSeq}`,
-      headers: { Cookie: `accessToken=${accessToken?.value}` },
+      url: `/board/board-detail/${boardSeq}`,
     });
 
     const { data, result, message } = response;
@@ -33,6 +32,8 @@ export default async function BoardDetailPage({ params }: IProps) {
   } catch (error) {
     console.error('API 호출 중 에러 발생', error);
   }
+
+  console.log('boardDetailboardDetailboardDetail', boardDetail);
 
   if (!boardDetail) {
     return;

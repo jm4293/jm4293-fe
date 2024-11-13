@@ -1,4 +1,3 @@
-import { cookies } from 'next/headers';
 import Pagination from '@/components/pagination/Pagination';
 import { BOARD_ITEM_COUNT } from '@/commons/constant';
 import { IBoardListRes } from '@/types/interface/board/board.response.interface';
@@ -13,7 +12,6 @@ interface IProps {
 }
 
 export default async function BoardListPage({ searchParams }: IProps) {
-  const accessToken = cookies().get('accessToken');
   const currentPage = searchParams.page ? parseInt(searchParams.page, 10) : 1;
 
   let boardList: IBoardListRes[] = [];
@@ -21,9 +19,8 @@ export default async function BoardListPage({ searchParams }: IProps) {
 
   try {
     const response = await FetchConfig.get<{ list: IBoardListRes[]; totalCount: number }>({
-      url: 'board/board-list',
+      url: '/board/board-list',
       queryString: { page: currentPage, count: BOARD_ITEM_COUNT },
-      headers: { Cookie: `accessToken=${accessToken?.value}` },
     });
 
     const { data, result, message } = response;

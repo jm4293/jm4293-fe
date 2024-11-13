@@ -14,13 +14,18 @@ import {
 } from '@/types/interface';
 import { useRouter } from 'next/navigation';
 import { AuthApi } from '@/api-url/auth';
+import useStorage from '@/hooks/useStorage';
 
 export default function useAuthMutation() {
   const router = useRouter();
+  const { local } = useStorage();
 
   const onSignInMutation = useMutation<MutationResponse<IAuthSignInRes>, MutationError, IAuthSignInReq>({
     mutationFn: (data) => AuthApi.signIn(data),
-    onSuccess: () => {
+    onSuccess: (res) => {
+      const { refreshToken } = res.data.data;
+
+      local.set('refreshToken', refreshToken);
       router.push('/board');
     },
   });

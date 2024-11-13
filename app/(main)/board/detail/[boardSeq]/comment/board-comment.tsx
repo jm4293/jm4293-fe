@@ -1,7 +1,7 @@
 'use client';
 
 import dayjs from 'dayjs';
-import useBoardCommentQuery from '@/hooks/mutation/board-comment/useBoardCommentQuery';
+import useBoardCommentQuery from '@/hooks/query/board-comment/useBoardCommentQuery';
 import { IBoardCommentsRes } from '@/types/interface/board-comment';
 import { useState } from 'react';
 import useBoardCommentMutation from '@/hooks/mutation/board-comment/useBoardCommentMutation';

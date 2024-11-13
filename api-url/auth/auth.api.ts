@@ -5,7 +5,7 @@ import {
   IAuthSignUpReq,
   IAuthVerifyEmailReq,
 } from '@/types/interface/auth';
-import { AxiosConfig } from '../../commons/axios-config';
+import { AxiosConfig } from '@/commons/axios-config';
 
 export class AuthApi extends AxiosConfig {
   static _baseUrl = `${process.env.NEXT_PUBLIC_GLOBAL_PREFIX}/auth`;
