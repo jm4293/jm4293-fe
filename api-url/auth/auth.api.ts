@@ -8,7 +8,7 @@ import {
 import { AxiosConfig } from '@/commons/axios-config';
 
 export class AuthApi extends AxiosConfig {
-  static _baseUrl = `${process.env.NEXT_PUBLIC_GLOBAL_PREFIX}/auth`;
+  static _baseUrl = '/auth';
 
   static async signIn(data: IAuthSignInReq) {
     return await AxiosConfig.post({ url: `${this._baseUrl}/sign-in`, data });

@@ -1,4 +1,5 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
+import { ResponseConfig } from '@/types/interface';
 
 interface IRequest {
   method: string;
@@ -39,7 +40,7 @@ interface IPatchRequest {
 
 export class AxiosConfig {
   private static _axiosInstance = axios.create({
-    baseURL: `${process.env.NEXT_PUBLIC_API_URL}:${process.env.NEXT_PUBLIC_API_PORT}`,
+    baseURL: `${process.env.NEXT_PUBLIC_API_URL}:${process.env.NEXT_PUBLIC_API_PORT}/${process.env.NEXT_PUBLIC_GLOBAL_PREFIX}`,
     headers: { 'Content-Type': 'application/json' },
     withCredentials: true,
   });
@@ -53,6 +54,35 @@ export class AxiosConfig {
           case 400:
             break;
           case 401:
+            const refreshToken = localStorage.getItem('refreshToken');
+
+            if (!refreshToken) {
+              alert('로그인이 필요합니다.');
+              window.location.href = '/auth';
+            }
+
+            const response: AxiosResponse<ResponseConfig<{ accessToken: string }>> = await this.post({
+              url: '/auth/refresh-token',
+              data: { refreshToken },
+            });
+
+            if (response) {
+              const { accessToken } = response.data.data;
+
+              if (accessToken) {
+                // document.cookie = `accessToken=${accessToken}; path=/; max-age=3600; Secure; HttpOnly`;
+
+                if (error.config) {
+                  const { url, method, data } = error.config;
+
+                  return await this._axiosInstance.request({ method, url, data });
+                }
+              } else {
+                window.location.href = '/auth';
+              }
+            }
+            break;
+          case 403:
             break;
           case 404:
             break;

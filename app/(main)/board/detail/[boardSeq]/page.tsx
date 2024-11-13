@@ -33,8 +33,6 @@ export default async function BoardDetailPage({ params }: IProps) {
     console.error('API 호출 중 에러 발생', error);
   }
 
-  console.log('boardDetailboardDetailboardDetail', boardDetail);
-
   if (!boardDetail) {
     return;
   }

@@ -74,6 +74,7 @@ export class FetchConfig {
       },
       body: body ? JSON.stringify(body) : undefined,
       credentials: 'include',
+      cache: 'no-store',
     };
 
     try {

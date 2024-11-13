@@ -2,7 +2,7 @@ import { IBoardCreateReq, IBoardDeleteReq, IBoardModifyReq } from '@/types/inter
 import { AxiosConfig } from '@/commons/axios-config';
 
 export class BoardApi extends AxiosConfig {
-  static _baseUrl = `${process.env.NEXT_PUBLIC_GLOBAL_PREFIX}/board`;
+  static _baseUrl = '/board';
 
   static async boardDetail(params: number) {
     return await AxiosConfig.get({ url: `${this._baseUrl}/board-detail/${params}` });
