@@ -1,6 +1,7 @@
 import {
   IAuthChangePasswordReq,
   IAuthFindEmailReq,
+  IAuthOauthNaverTokenReq,
   IAuthSignInReq,
   IAuthSignUpReq,
   IAuthVerifyEmailReq,
@@ -28,5 +29,9 @@ export class AuthApi extends AxiosConfig {
 
   static async findEmail(data: IAuthFindEmailReq) {
     return await AxiosConfig.post({ url: `${this._baseUrl}/find-email`, data });
+  }
+
+  static async oauthNaverToken(data: IAuthOauthNaverTokenReq) {
+    return await AxiosConfig.post({ url: `${this._baseUrl}/oauth-naver`, data });
   }
 }

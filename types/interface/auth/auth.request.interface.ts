@@ -22,3 +22,8 @@ export interface IAuthChangePasswordReq {
 export interface IAuthFindEmailReq {
   name: string;
 }
+
+export interface IAuthOauthNaverTokenReq extends Record<string, string | number> {
+  accessToken: string;
+  refreshToken: string;
+}
