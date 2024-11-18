@@ -124,4 +124,30 @@ export class AxiosConfig {
   static setEmailCookie(email: string) {
     document.cookie = `EMAIL=${email}; path=/; max-age=300`;
   }
+
+  static async renewAccessToken() {
+    const refreshToken = localStorage.getItem('refreshToken');
+
+    if (!refreshToken) {
+      alert('로그인이 필요합니다.');
+      window.location.href = '/auth';
+    }
+
+    const response: AxiosResponse<ResponseConfig<{ accessToken: string }>> = await this.post({
+      url: '/auth/refresh-token',
+      data: { refreshToken },
+    });
+
+    if (response) {
+      const { accessToken } = response.data.data;
+
+      if (accessToken) {
+        // document.cookie = `accessToken=${accessToken}; path=/; max-age=3600; Secure; HttpOnly`;
+
+        return accessToken;
+      } else {
+        window.location.href = '/auth';
+      }
+    }
+  }
 }
