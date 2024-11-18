@@ -1,5 +1,5 @@
 import Pagination from '@/components/pagination/Pagination';
-import { BOARD_ITEM_COUNT } from '@/commons/constant';
+import { BOARD_ITEM_COUNT } from '@/constant';
 import { IBoardListRes } from '@/types/interface/board/board.response.interface';
 import BoardListHeader from '@/app/(main)/board/_components/board-list-header';
 import BoardList from '@/app/(main)/board/_components/board-list-row';

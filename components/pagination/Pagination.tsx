@@ -1,8 +1,8 @@
 'use client';
 
-import { BOARD_ITEM_COUNT, PAGINATION_MAX_PAGES } from '@/commons/constant';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { BOARD_ITEM_COUNT, PAGINATION_MAX_PAGES } from '@/constant';
 
 interface IProps {
   totalCount: number;
